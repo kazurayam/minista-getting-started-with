@@ -1,0 +1,42 @@
+== minimal-minista-project
+
+[source,shell]
+----
+$ bun --version
+1.4.0
+----
+
+[source,shell]
+----
+$ cd ~
+$ mkdir minista-getting-started-with
+$ cd minista-getting-started-with
+$ ROOT=`pwd`
+$ echo $ROOT
+/Users/kazurayam/tmp/minista-getting-started-with
+----
+
+
+ministaの必要最小限のサンプルプロジェクトを作った。 link:https://minista.qranoko.jp/docs/setup#automatic[Setup / minista] のなかの *Automatic* の説明を参照した。
+
+
+[source,shell]
+----
+$ cd $ROOT
+$ bun create minista@latest minimal-minista-project -- --template minimal.ts
+
+create-minista (v4.0.10)
+? Which template would you like to use? › - Use arrow-keys. Return to submit.
+    Minimal (JavaScript)
+❯   Minimal (Typescript)
+> Copying project files...
+✔ Done!
+
+Next steps:
+  1: cd minimal-minista-project
+  2: npm install
+  3: npm run dev
+
+To close the dev server, hit Ctrl + C
+----
+

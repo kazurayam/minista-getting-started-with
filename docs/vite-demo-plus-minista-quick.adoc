@@ -1,0 +1,54 @@
+== vite-demo-plus-minista-quick
+
+`vite-demo` プロジェクトを静的HTMLに変換したいと思った。link:https://minista.qranoko.jp/docs/setup#manual[Setup - ministaのManual] の説明に従って`vite-demo` に minista を追加すればそれが可能になるんじゃないかと思った。やってみたが、最初、うまくいかなかった。自分で解決できなかったので、ministaのGitHubレポジトリのissueに質問を投稿した。幸いなことにministaの作者 qrac が即答してくれた。
+
+- https://github.com/qrac/minista/issues/146#event-30162718761
+
+qrac の回答になぞることにより、viteのデモプロジェクトにministaを組み込んで静的HTMLサイトを生成することに成功した。その内容を以下に記述しよう。
+
+viteのデモプロジェクトを雛形として`vite-demo-plus-minista-quick` プロジェクトを作った。
+
+[source,shell]
+----
+$ cd $ROOT/vite-demo-plus-minista
+$ bun create vite@latest vite-demo-plus-minista-quick
+----
+
+これによって `vite-demo` プロジェクトと全く同じファイル群一式が `vite-demo-plus-minista-quick` ディレクトリの下に出力された。
+
+ここに minista のパッケージを追加した。
+
+[source,shell]
+----
+$ cd vite-demo-plust-minista-quick
+$ bun add -d minista
+bun add v1.4.0 (34cbb9a40)
+
++ @types/node@24.13.3 (v26.4.0 available)
++ @types/react@19.2.18
++ @types/react-dom@19.2.5
++ @vitejs/plugin-react@6.1.1
++ oxlint@1.80.0
++ typescript@6.0.3 (v7.0.2 available)
++ vite@8.2.2
++ react@19.2.8
++ react-dom@19.2.8
+
+installed minista@4.0.10 with binaries:
+ - minista
+
+254 packages installed [7.49s]
+----
+
+qrqcのアドバイスによれば、わたしは下記３つのministaプラグインを必要とするだろう、とのこと。
+
+* pluginSsg - minista https://minista.qranoko.jp/docs/plugins/ssg
+* pluginBundle - minista https://minista.qranoko.jp/docs/plugins/bundle
+* pluginIsland - minista https://minista.qranoko.jp/docs/plugins/island
+
+これらのプラグインを有効化するために `vite-demo-plus-minista-quick/vite.config.ts` を書きにように修正する必要がある。
+
+[source,typescript]
+----
+include::../vite-demo-plus-minista-quick/vite.config.ts[]
+----

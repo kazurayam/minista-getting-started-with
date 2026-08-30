@@ -41,3 +41,15 @@
 .myMain {
     padding: 20px;
 }
+
+figure {
+  float: right;
+  margin: 0 15px 15px 0;
+  width: 30%;
+}
+figure img {
+  width: 100%;
+}
+.clear {
+  clear: both;
+}

@@ -10,7 +10,6 @@ export default function (props: LayoutProps) {
     <>
       <Head htmlAttributes={{ lang: "en" }}>
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="stylesheet" href="/assets/css/index.css" />
         <title>my-minista-project</title>
       </Head>
       <MyHeader />

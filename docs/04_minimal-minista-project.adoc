@@ -1,20 +1,7 @@
 == minimal-minista-project
 
-[source,shell]
-----
-$ bun --version
-1.4.0
-----
+ministaの公式ドキュメントの最初に紹介されているサンプルプロジェクトをやってみた。
 
-[source,shell]
-----
-$ cd ~
-$ mkdir minista-getting-started-with
-$ cd minista-getting-started-with
-$ ROOT=`pwd`
-$ echo $ROOT
-/Users/kazurayam/tmp/minista-getting-started-with
-----
 
 
 ministaの必要最小限のサンプルプロジェクトを作った。 link:https://minista.qranoko.jp/docs/setup#automatic[Setup / minista] のなかの *Automatic* の説明を参照した。

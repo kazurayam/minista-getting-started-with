@@ -1,0 +1,43 @@
+.myheader {
+    background-color: deepskyblue;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+.mynav {
+    background-color:gainsboro;
+}
+
+.topnav {
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  background-color: #333333;
+}
+
+/* Style links in topnav */
+.topnav li a {
+  display: block;
+  color: #f1f1f1;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change color on hover */
+.topnav li a:hover {
+  background-color: #dddddd;
+  color: black;
+}
+
+.myfooter {
+    background-color: #333333;
+    padding: 5px;
+    text-align: center;
+    color:white;
+}
+
+.myMain {
+    padding: 20px;
+}

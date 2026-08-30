@@ -1,0 +1,19 @@
+{
+  "name": "minista-project",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "minista",
+    "build": "minista build",
+    "preview": "minista preview"
+  },
+  "devDependencies": {
+    "minista": "^4.0.10",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "vite": "^8.2.1"
+  },
+  "dependencies": {
+    "@types/react": "^19.2.18"
+  }
+}

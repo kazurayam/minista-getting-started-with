@@ -2,17 +2,17 @@
 :PAGES_URL: https://kazurayam.github.io/minista-getting-started-with
 :projectVersion: 0.0.0
 
-= ViteのデモプロジェクトをMinistaで静的HTMLサイトに変換することに成功した話
+= ministaに入門した話
 
 include::./01_abstract.adoc[]
 
 include::./02_environment.adoc[]
 
-include::./04_minimal-minista-project.adoc[]
+include::./03_minimal-minista-project.adoc[]
 
-include::./05_vite-demo.adoc[]
+include::./04_my-minista-project.adoc[]
 
-include::./06_vite-demo-plus-minista-quick.adoc[]
+include::./05_minista-docs.adoc[]
 
-include::./07_vite-demo-plus-minista-restructured.adoc[]
+include::./06_conclusion.adoc[]
 

@@ -1,0 +1,190 @@
+== minimal-minista-project
+
+まず手元のPCに適当なディレクトリを作った。そのディレクトリのパスをシェル変数 `ROOT` で参照できるようにした。
+
+[source,shell]
+----
+$ cd ~/tmp
+$ mkdir minista-getting-started-with
+$ cd minsta-getting-started-with
+$ ROOT=`pwd`
+----
+
+ministaの公式ドキュメント link:https://minista.qranoko.jp/docs/setup#automatic[Setup / minista] のなかの *Automatic* の説明を参照して最小限のministaプロジェクト `minimal-minista-project` を作った。
+
+[source,shell]
+----
+$ cd $ROOT
+$ bun create minista@latest minimal-minista-project -- --template minimal.ts
+
+create-minista (v4.0.10)
+? Which template would you like to use? › - Use arrow-keys. Return to submit.
+    Minimal (JavaScript)
+❯   Minimal (Typescript)
+> Copying project files...
+✔ Done!
+
+Next steps:
+  1: cd minimal-minista-project
+  2: npm install
+  3: npm run dev
+
+To close the dev server, hit Ctrl + C
+----
+
+どんなファイルが初期作成されたかというと
+
+[source,shell]
+----
+$ tree minimal-minista-project
+minimal-minista-project
+├── package.json
+├── src
+│   └── pages
+│       └── index.tsx
+├── tsconfig.json
+└── vite.config.ts
+
+3 directories, 4 files
+----
+
+続けて `bun install` コマンドを実行し、外部パッケージを導入しよう。
+
+[source,shell]
+----
+$ cd $ROOT/minimal-minista-project
+$ bun install
+bun install v1.4.0 (34cbb9a40)
+
++ @types/node@26.4.0
++ @types/react@19.2.18
++ @types/react-dom@19.2.5
++ minista@4.0.10
++ react@19.2.8
++ react-dom@19.2.8
++ typescript@7.0.2
++ vite@8.2.2
+
+252 packages installed [5.59s]
+----
+
+`bun create minista`によって初期作成されたファイルの中身をみてみよう。
+
+=== `package.json`
+
+[source,json]
+----
+include::../minimal-minista-project/package.json
+----
+
+`"devDependencies"` プロパティにいくつかの外部パッケージが列挙されている。これらは `minista` パッケージとそれが依存しているパッケージ群だ。だからコマンドラインで下記の操作をした結果と同じだろう。
+
+[source,shell]
+----
+$ cd $ROOT/minimal-minista-project
+$ bun add minista@latest
+----
+
+`"scripts"` プロパティに３つのコマンドが定義されている。
+
+[source,json]
+----
+  "scripts": {
+    "dev": "minista",
+    "build": "minista build",
+    "preview": "minista preview"
+  },
+----
+
+==== bun run dev
+
+コマンドラインで `bun run dev` とやるとViteの開発用Webサーバが立ち上がる。
+
+[source,shell]
+----
+$ cd $ROOT/minimal-minista-project
+$ bun run dev
+$ minista
+
+  VITE v8.2.2  ready in 6013 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+  ➜  press h + enter to show help
+
+----
+
+ブラウザで http://localhost:5175/ を開くとこんな画面が応答される。
+
+image:{PAGES_URL}/images/001_minimal-minista-project.png[]
+
+CTRL+Cで開発サーバーを停止することができる。
+
+==== bun run build
+
+コマンドラインで `bun run dev` とやるとViteによるビルドが実行される。 `dist` ディレクトリが作られ、その中に静的HTML＋CSSのサイトが生成される。
+
+[source,shell]
+----
+$ cd $ROOT/minimal-minista-project
+$ bun run build
+$ minista build
+vite v8.2.2 building ssr environment for production...
+✓ 3 modules transformed.
+computing gzip size...
+node_modules/.minista/ssr/__minista-ssg.mjs  0.87 kB │ gzip: 0.46 kB
+
+✓ built in 41ms
+vite v8.2.2 building client environment for production...
+✓ 2 modules transformed.
+computing gzip size...
+dist/index.html  0.17 kB │ gzip: 0.15 kB
+
+✓ built in 41ms
+
+$ tree dist
+dist
+└── index.html
+
+1 directory, 1 file
+----
+
+このサンプルが出力するのは `index.html` ファイルが一個だけだ。たしかにminimalだ。あまり参考にならない。
+
+もう少し中身のあるサンプルをあとで紹介するから今はパスしてほしい。
+
+==== bun run preview
+
+コマンドラインで `bun run dev` とやるとViteの開発サーバが立ち上がる。今度は `dist` ディレクトリの中に生成された静的HTML＋CSSのサイトが閲覧できる。
+
+[source, shell]
+----
+$ minista preview
+  ➜  Local:   http://localhost:4173/
+  ➜  Network: use --host to expose
+  ➜  press h + enter to show help
+----
+
+ブラウザで http://localhost:4173/ をひらけば "Hello!" と画面が応答される。`bun run dev` した時に応答された画面は `src/index.tsx` ファイルから生成された画面だが、`bun run preview` した時に応答されるのは `dist/index.html` ファイルだ。.jsxと.htmlと、ふたつのファイルの中身は違うが、ブラウザに表示された画面はまったく同じ。ministaが「スタティックサイトジェネレーション」を実行するとはこういうことだ。
+
+=== `src/pages/index.tsx``
+
+[source,json]
+----
+include::../minimal-minista-project/src/pages/index.tsx
+----
+
+* `tsconfig.json``
+
+[source,json]
+----
+include::../minimal-minista-project/tsconfig.json
+----
+
+* `vite.config.ts`
+
+[source,json]
+----
+include::../minimal-minista-project/vite.config.ts
+----
+

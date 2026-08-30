@@ -1,4 +1,4 @@
-import { defineConfig, pluginSsg, pluginBundle } from "minista"
+import { defineConfig, pluginSsg, pluginBundle, pluginBeautify } from "minista"
 
 export default defineConfig({
   plugins: [
@@ -11,6 +11,7 @@ export default defineConfig({
       src: ["/src/layouts/index.{tsx,jsx}", "/src/pages/**/*.{tsx,jsx,mdx}"],
       outName: "bundle",
       useExportCss: true,
-    })
+    }),
+    pluginBeautify()
   ],
 })

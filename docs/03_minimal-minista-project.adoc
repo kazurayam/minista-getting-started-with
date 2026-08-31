@@ -77,7 +77,7 @@ bun install v1.4.0 (34cbb9a40)
 include::../minimal-minista-project/package.json[]
 ----
 
-`"devDependencies"` プロパティにいくつかの外部パッケージが列挙されている。これらは `minista` パッケージとそれが依存しているパッケージ群だ。だからコマンドラインで下記の操作をした結果と同じだろう。
+`"devDependencies"` プロパティにいくつかの外部パッケージが列挙されている。`minista` パッケージが根っこで、ministaが依存してい他のパッケージ群を網羅している。つまりコマンドラインで下記の操作をした結果と同じだろう。
 
 [source,shell]
 ----

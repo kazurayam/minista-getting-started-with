@@ -1,26 +1,26 @@
 - Table of contents
 {:toc}
 
-# ministaに入門した話
+# スタティックサイトジェネレーター minista を試してみた
 
 ## 背景
 
-わたしはWeb技術を中心にいろいろ作って楽しんでいる。ある学術団体の事務職員をしていて、その団体のインターネットホームページの管理を任された。そのサイトはいわゆる古き良きHTMLサイトで、数十のHTMLファイルとCSSファイルから構成されている。たくさんのHTMLの中に `<head>` と `<nav>` と `<footer>` があって、ほとんど同じコードが重複して存在している。外部のWebデザイナに発注して納品されたものだ。受託したデザイナがツールでソースを書きツールでビルドした成果物がApacheサーバのhtdocsディレクトリの下に配置されている。デザイナがどういうツールで納品物を作ったかはわからない。デザイナから発注主へソースを納入するということはしなかったようだ。多分「ソースって何？要らないよ、手に余るから」と発注主が言ったんじゃないかな。
+わたしはWebプログラミングを中心にいろいろ学んで作って楽しんでいる。ある学術団体の事務職員をしていて、その団体のインターネットホームページの管理を任された。そのサイトは古き良きHTMLサイトで、数十のHTMLファイルとCSSファイルから構成されている。たくさんのHTMLの中に `<head>` と `<nav>` と `<footer>` があって、ほとんど同じコードが重複して存在している。数年前、外部のWebデザイナに発注して初期構築したらしい。受託したデザイナが何らかのオーサリングツールでソースを書き、ビルドした成果物がApacheサーバのhtdocsディレクトリの下に配置されている。デザイナがどういうツールを使ったのかはわからない。デザイナから発注主へソースコードを納入するということはしなかったようだ。たぶん発注主が「ソースって何？要らないよ。よくわからないから」と言ったんじゃないかと推測している。
 
-わたしはときどきこのサイトに **What’s News** 的な記事を追加するべくHTMLをエディタで編集する。その時このままではメンテナンスが厳しいなあと感じている。近い将来、誰かにサイトの管理役を引き継ぐことになるだろう。その時HTMLの山をホイと渡してあとは知らんぷりするのは気がとがめる。今どきのソフトウェア技術を導入してホームページのメンテナンス作業を楽にしたい、と思った。
+わたしは今でも必要に応じてこのサイトに **What’s News** 的な記事を追加するべくエディタでHTMLを修正している。このやり方でメンテナンスを続けるのは厳しいなあと感じている。近い将来、誰かにサイトの管理役を引き継ぐことになるだろう。その時HTMLの山をホイと渡してあとは知らんぷりするのは気がとがめる。今どきのソフトウェア技術を導入してホームページのメンテナンス作業を楽にしたい、と思った。
 
-いくつかのページをJSXで作り直してみた。それはもちろんできる。JSXを導入すればコードをコンポーネント化することができてうれしい。しかしこのサイトをReactによる **Single Page Application** に移行したいのか？そうではない。これは閲覧向けの素朴なサイトで、Reactの高度なユーザーインタフェースは要らない。Apacheサーバに静的HTMLとCSSを配置しただけのサイトの現状構成を変えるべき理由がない。Reactアプリにしたら団体の人に「ホームページの応答が遅くなった」といわれるだろうし。どうしようか…​
-
-最近 [minista](https://minista.qranoko.jp/) というソフトウェアを見つけた。
+いくつかのページをJSXで作り直してみた。それはもちろんできる。JSXを導入すればコードをコンポーネント化することができてコードの重複を排除できるのがうれしい。しかしこのサイトをReactによる **Single Page Application** に移行したいと望んではいない。閲覧オンリーなサイトだから、Reactの会話的ユーザーインタフェースは必要ない。レンタルサーバー上のApacheサーバに静的HTMLとCSSを配置しただけのサイトの現状構成を変えてNode.jsのサーバに移行すべき理由がない。SPAにしたら団体の人に「ホームページの応答が遅くなった」といわれるだろうし。どうしようか…​と迷走しているうちに [minista](https://minista.qranoko.jp/) を見つけた。
 
 > minista（ミニスタ）は、ReactのJSXとViteで100%静的なサイトを作るスタティックサイトジェネレーターです。
 
-これ、わたしのニーズに適っているかもしれないと思った。ministaのドキュメントの linik:https://minista.qranoko.jp/docs/setup\[Setup\] を手始めに色々試した。途中、行き詰まってしまい ministaのGitHubレポジトリにissueを投げたこともあった。
+これ、わたしのニーズにあっているかもしれないと思った。ministaのドキュメント [”Setup”](https://minista.qranoko.jp/docs/setup) を手始めにいろいろ試した。途中行き詰まってしまい ministaのGitHubレポジトリにissueを投げた。
 
 -   [build したらエラ〜発生: ReferenceError: document is not defined
     \#146](https://github.com/qrac/minista/issues/146#event-30162718761)
 
-このissueにたいしエキスパートが応えてくれて、大いに学ぶところがあった。ministaの公式ドキュメントは製品に関する詳細情報が盛られているが、初学者が読むべき初歩的な手引きが見当たらなかった。そこでわたしの経験をネタに Getting Started with minista を書きます。
+このissueにキスパートが応えてくれておおいに学ぶところがあった。
+
+ministaの公式ドキュメントには製品に関する詳細な情報が盛られている。しかし未経験者が読むべき初歩的な手引きが見当たらなかった。そこでわたしの経験をネタに Getting Started with minista を書くことにした。
 
 ## 作業環境
 
@@ -73,7 +73,7 @@ ministaの公式ドキュメント [Setup / minista](https://minista.qranoko.jp/
 
     3 directories, 4 files
 
-続けて `bun install` コマンドを実行し、外部パッケージを導入しよう。
+続けて `bun install` コマンドを実行し、外部パッケージを導入した。
 
     $ cd $ROOT/minimal-minista-project
     $ bun install
@@ -90,18 +90,37 @@ ministaの公式ドキュメント [Setup / minista](https://minista.qranoko.jp/
 
     252 packages installed [5.59s]
 
-\`bun create minista\`によって初期作成されたファイルの中身をみてみよう。
+`bun create minista` コマンドによって初期作成されたファイルの中身をみてみよう。
 
-### `package.json`
+### `package.json` ファイル
 
-    include::../minimal-minista-project/package.json
+    {
+      "name": "minista-project",
+      "private": true,
+      "type": "module",
+      "scripts": {
+        "dev": "minista",
+        "build": "minista build",
+        "preview": "minista preview"
+      },
+      "devDependencies": {
+        "@types/node": "^26.2.0",
+        "@types/react": "^19.2.18",
+        "@types/react-dom": "^19.2.4",
+        "minista": "^4.0.10",
+        "react": "^19.2.8",
+        "react-dom": "^19.2.8",
+        "typescript": "^7.0.2",
+        "vite": "^8.2.1"
+      }
+    }
 
 `"devDependencies"` プロパティにいくつかの外部パッケージが列挙されている。これらは `minista` パッケージとそれが依存しているパッケージ群だ。だからコマンドラインで下記の操作をした結果と同じだろう。
 
     $ cd $ROOT/minimal-minista-project
     $ bun add minista@latest
 
-`"scripts"` プロパティに３つのコマンドが定義されている。
+それから `"scripts"` プロパティに３つのコマンドが定義されている。
 
       "scripts": {
         "dev": "minista",
@@ -109,7 +128,9 @@ ministaの公式ドキュメント [Setup / minista](https://minista.qranoko.jp/
         "preview": "minista preview"
       },
 
-#### bun run dev
+これら３つのコマンドはministaで開発する上で繰り返し実行するものだ。詳しくみてみよう。
+
+#### コマンド1 `bun run dev`
 
 コマンドラインで `bun run dev` とやるとViteの開発用Webサーバが立ち上がる。
 
@@ -123,15 +144,15 @@ ministaの公式ドキュメント [Setup / minista](https://minista.qranoko.jp/
       ➜  Network: use --host to expose
       ➜  press h + enter to show help
 
-ブラウザで <http://localhost:5175/> を開くとこんな画面が応答される。
+ブラウザで <http://localhost:5173/> を開くとこんな画面が応答される。
 
 ![001 minimal minista project](https://kazurayam.github.io/minista-getting-started-with/images/001_minimal-minista-project.png)
 
-CTRL+Cで開発サーバーを停止することができる。
+開発サーバーを停止するにはコマンドラインでCTRL+Cとやればよい。
 
-#### bun run build
+#### コマンド2 `bun run build`
 
-コマンドラインで `bun run dev` とやるとViteによるビルドが実行される。 `dist` ディレクトリが作られ、その中に静的HTML＋CSSのサイトが生成される。
+コマンドラインで `bun run dev` とやるとViteによるビルドが実行される。 ビルドによって `dist` ディレクトリが作られ、その中にWebサイトを構成するHTMLやCSSや画像ファイルが出力される。`dist` ディレクトリの中に作られたHTML＋CSS＋画像一式をApacheサーバのhtdocsディレクトリの下にFTPでアップロードすれば、高速で応答するWebサイトができるだろう。
 
     $ cd $ROOT/minimal-minista-project
     $ bun run build
@@ -149,48 +170,109 @@ CTRL+Cで開発サーバーを停止することができる。
 
     ✓ built in 41ms
 
+`minimal-minista-project` の `dist` ディレクトリの中身を見てみよう。
+
     $ tree dist
     dist
     └── index.html
 
     1 directory, 1 file
 
-このサンプルが出力するのは `index.html` ファイルが一個だけだ。たしかにminimalだ。あまり参考にならない。
+minista が `src/index.tsx` から `dist/index.html` を生成した。これを見ればたしかに **static site generation** が行われたのがわかる。
 
-もう少し中身のあるサンプルをあとで紹介するから今はパスしてほしい。
+#### コマンド３ `bun run preview`
 
-#### bun run preview
-
-コマンドラインで `bun run dev` とやるとViteの開発サーバが立ち上がる。今度は `dist` ディレクトリの中に生成された静的HTML＋CSSのサイトが閲覧できる。
+コマンドラインで `bun run dev` とやるとViteの開発サーバが立ち上がる。すると `dist` ディレクトリの中に生成された静的HTML＋CSSのサイトが閲覧できる。
 
     $ minista preview
       ➜  Local:   http://localhost:4173/
       ➜  Network: use --host to expose
       ➜  press h + enter to show help
 
-ブラウザで <http://localhost:4173/> をひらけば "Hello!" と画面が応答される。`bun run dev` した時に応答された画面は `src/index.tsx` ファイルから生成された画面だが、`bun run preview` した時に応答されるのは `dist/index.html` ファイルだ。.jsxと.htmlと、ふたつのファイルの中身は違うが、ブラウザに表示された画面はまったく同じ。ministaが「スタティックサイトジェネレーション」を実行するとはこういうことだ。
+ブラウザで <http://localhost:4173/> をひらけば "Hello!" 画面が応答される。それは `bun run dev` コマンドによって閲覧可能になった "Hello!" 画面と見た目は同じだ。
 
-### `` src/pages/index.tsx` ``
+`bun run dev` コマンドによって閲覧可能になった画面は `src/index.tsx` ファイルから生成された画面だ。その一方で `bun run preview` コマンドによって閲覧可能になった画面は `dist/index.html` によるものだ。 `src/index.jsx` と `dist/index.html` と、ふたつのファイルの中身は違うが、ブラウザに表示された画面の見た目は同じだ。
 
-    include::../minimal-minista-project/src/pages/index.tsx
+### `src/pages/index.tsx` ファイル
 
--   `` tsconfig.json` ``
+ブラウザで `http://localhost:5173/` を開いた時に表示される画面の元ネタがこの `.tsx` ファイルだ。JSX構文で書かれている。
 
-<!-- -->
+    export default function () {
+      return (
+        <>
+          <h1>Hello!</h1>
+        </>
+      )
+    }
 
-    include::../minimal-minista-project/tsconfig.json
+`.tsx` ファイルが一個だけとは、その名の通り必要最小限（minimal）なサンプルだ。ミニマルすぎてministaの使い方を習うのにあまり参考にならない。 *もう少し中身のあるサンプルをあとで紹介する。*
 
--   `vite.config.ts`
+### `dist/index.html` ファイル
 
-<!-- -->
+ministaは `src/index.tsx` を入力として `dist/index.html` ファイルを出力する。ministaによって生成されたhtmlファイルはminified形式で、改行も字下げも無い。参照の便宜のためここではエディタでprettyに直したHTMLを下記に示す。
 
-    include::../minimal-minista-project/vite.config.ts
+    <!doctype html>
+    <html lang="ja">
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </head>
+
+    <body>
+        <h1>Hello!</h1>
+    </body>
+
+    </html>
+
+### `tsconfig.json` ファイル
+
+    {
+      "compilerOptions": {
+        "target": "esnext",
+        "module": "esnext",
+        "moduleResolution": "bundler",
+        "resolveJsonModule": true,
+        "allowSyntheticDefaultImports": true,
+        "skipLibCheck": true,
+        "noErrorTruncation": true,
+        "jsx": "react-jsx",
+        "types": ["minista/client"]
+      },
+      "exclude": ["node_modules", "dist"]
+    }
+
+この中に
+
+        "jsx": "react-jsx",
+
+と書かれていることに注目。TypeScriptコンパイラがJSX構文を認識して処理するためにReactが実装したJSX処理系を使えと宣言している。
+
+この宣言があるのでTypeScriptコンパイラは `src/pages/index.tsx` のなかの `<h1>Hello!</h1>` という1行を妥当なJSX構文として受け入れる。もしもこの宣言がないとTypeScriptコンパイラはJSX構文を受け入れず、 `<h1>Hello!</h1>` を構文エラーとしてはじくだろう。
+
+### `vite.config.ts` ファイル
+
+    import { defineConfig, pluginSsg } from "minista"
+
+    export default defineConfig({
+      plugins: [pluginSsg()],
+    })
+
+ここでministaが提供する `pluginSsg` プラグインを有効化すると宣言している。この宣言は重要だ。これが無いとあなたが `bun run build` コマンドを実行しても **S**tatic **s**ite **g**enerationの処理が行われないので `dist` 　ディレクトリの中に何も出力されないだろう。
+
+`pluginSsg` プラグインのドキュメントを一読しよう。
+
+-   [pluginSsgのドキュメント](https://minista.qranoko.jp/docs/plugins/ssg)
+
+`pluginSsg` プラグインがどんな設定項目を受け入れるか、それぞれの項目にどういう値を与えるべきかを理解することが、ministaに入門するための最初の一歩です。
 
 ## my-minista-project
 
 TODO
 
-Unresolved directive in index\_.adoc - include::./05\_minista-docs.adoc\[\]
+## minitaレポジトリのdocsプロジェクト
+
+TODO
 
 ## 結び
 

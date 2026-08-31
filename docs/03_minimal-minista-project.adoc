@@ -48,7 +48,7 @@ minimal-minista-project
 3 directories, 4 files
 ----
 
-続けて `bun install` コマンドを実行し、外部パッケージを導入しよう。
+続けて `bun install` コマンドを実行し、外部パッケージを導入した。
 
 [source,shell]
 ----
@@ -68,13 +68,13 @@ bun install v1.4.0 (34cbb9a40)
 252 packages installed [5.59s]
 ----
 
-`bun create minista`によって初期作成されたファイルの中身をみてみよう。
+`bun create minista` コマンドによって初期作成されたファイルの中身をみてみよう。
 
-=== `package.json`
+=== `package.json` ファイル
 
 [source,json]
 ----
-include::../minimal-minista-project/package.json
+include::../minimal-minista-project/package.json[]
 ----
 
 `"devDependencies"` プロパティにいくつかの外部パッケージが列挙されている。これらは `minista` パッケージとそれが依存しているパッケージ群だ。だからコマンドラインで下記の操作をした結果と同じだろう。
@@ -85,7 +85,7 @@ $ cd $ROOT/minimal-minista-project
 $ bun add minista@latest
 ----
 
-`"scripts"` プロパティに３つのコマンドが定義されている。
+それから `"scripts"` プロパティに３つのコマンドが定義されている。
 
 [source,json]
 ----
@@ -96,7 +96,9 @@ $ bun add minista@latest
   },
 ----
 
-==== bun run dev
+これら３つのコマンドはministaで開発する上で繰り返し実行するものだ。詳しくみてみよう。
+
+==== コマンド1 `bun run dev`
 
 コマンドラインで `bun run dev` とやるとViteの開発用Webサーバが立ち上がる。
 
@@ -114,15 +116,16 @@ $ minista
 
 ----
 
-ブラウザで http://localhost:5175/ を開くとこんな画面が応答される。
+ブラウザで http://localhost:5173/ を開くとこんな画面が応答される。
 
 image:{PAGES_URL}/images/001_minimal-minista-project.png[]
 
-CTRL+Cで開発サーバーを停止することができる。
+開発サーバーを停止するにはコマンドラインでCTRL+Cとやればよい。
 
-==== bun run build
+==== コマンド2 `bun run build`
 
-コマンドラインで `bun run dev` とやるとViteによるビルドが実行される。 `dist` ディレクトリが作られ、その中に静的HTML＋CSSのサイトが生成される。
+コマンドラインで `bun run dev` とやるとViteによるビルドが実行される。 ビルドによって `dist` ディレクトリが作られ、その中にWebサイトを構成するHTMLやCSSや画像ファイルが出力される。`dist` ディレクトリの中に作られたHTML＋CSS＋画像一式をApacheサーバのhtdocsディレクトリの下にFTPでアップロードすれば、高速で応答するWebサイトができるだろう。
+
 
 [source,shell]
 ----
@@ -141,7 +144,12 @@ computing gzip size...
 dist/index.html  0.17 kB │ gzip: 0.15 kB
 
 ✓ built in 41ms
+----
 
+`minimal-minista-project` の `dist` ディレクトリの中身を見てみよう。
+
+[source,shell]
+----
 $ tree dist
 dist
 └── index.html
@@ -149,13 +157,12 @@ dist
 1 directory, 1 file
 ----
 
-このサンプルが出力するのは `index.html` ファイルが一個だけだ。たしかにminimalだ。あまり参考にならない。
+minista が `src/index.tsx` から `dist/index.html` を生成した。これを見ればたしかに ** static site generation** が行われたのがわかる。
 
-もう少し中身のあるサンプルをあとで紹介するから今はパスしてほしい。
 
-==== bun run preview
+==== コマンド３ `bun run preview`
 
-コマンドラインで `bun run dev` とやるとViteの開発サーバが立ち上がる。今度は `dist` ディレクトリの中に生成された静的HTML＋CSSのサイトが閲覧できる。
+コマンドラインで `bun run dev` とやるとViteの開発サーバが立ち上がる。すると `dist` ディレクトリの中に生成された静的HTML＋CSSのサイトが閲覧できる。
 
 [source, shell]
 ----
@@ -165,26 +172,75 @@ $ minista preview
   ➜  press h + enter to show help
 ----
 
-ブラウザで http://localhost:4173/ をひらけば "Hello!" と画面が応答される。`bun run dev` した時に応答された画面は `src/index.tsx` ファイルから生成された画面だが、`bun run preview` した時に応答されるのは `dist/index.html` ファイルだ。.jsxと.htmlと、ふたつのファイルの中身は違うが、ブラウザに表示された画面はまったく同じ。ministaが「スタティックサイトジェネレーション」を実行するとはこういうことだ。
+ブラウザで http://localhost:4173/ をひらけば "Hello!" 画面が応答される。それは `bun run dev` コマンドによって閲覧可能になった "Hello!" 画面と見た目は同じだ。
 
-=== `src/pages/index.tsx``
+`bun run dev` コマンドによって閲覧可能になった画面は `src/index.tsx` ファイルから生成された画面だ。その一方で `bun run preview` コマンドによって閲覧可能になった画面は `dist/index.html` によるものだ。 `src/index.jsx` と `dist/index.html` と、ふたつのファイルの中身は違うが、ブラウザに表示された画面の見た目は同じだ。
+
+
+=== `src/pages/index.tsx` ファイル
+
+ブラウザで `http://localhost:5173/` を開いた時に表示される画面の元ネタがこの `.tsx` ファイルだ。JSX構文で書かれている。
+
+[source,typescript]
+----
+include::../minimal-minista-project/src/pages/index.tsx[]
+----
+
+`.tsx` ファイルが一個だけとは、その名の通り必要最小限（minimal）なサンプルだ。ミニマルすぎてministaの使い方を習うのにあまり参考にならない。 _もう少し中身のあるサンプルをあとで紹介する。_
+
+=== `dist/index.html` ファイル
+
+ministaは `src/index.tsx` を入力として `dist/index.html` ファイルを出力する。ministaによって生成されたhtmlファイルはminified形式で、改行も字下げも無い。参照の便宜のためここではエディタでprettyに直したHTMLを下記に示す。
+
+
+[source,html]
+----
+<!doctype html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+    <h1>Hello!</h1>
+</body>
+
+</html>
+----
+
+
+
+=== `tsconfig.json` ファイル
 
 [source,json]
 ----
-include::../minimal-minista-project/src/pages/index.tsx
+include::../minimal-minista-project/tsconfig.json[]
 ----
 
-* `tsconfig.json``
-
-[source,json]
-----
-include::../minimal-minista-project/tsconfig.json
-----
-
-* `vite.config.ts`
+この中に
 
 [source,json]
 ----
-include::../minimal-minista-project/vite.config.ts
+    "jsx": "react-jsx",
 ----
 
+と書かれていることに注目。TypeScriptコンパイラがJSX構文を認識して処理するためにReactが実装したJSX処理系を使えと宣言している。
+
+この宣言があるのでTypeScriptコンパイラは `src/pages/index.tsx` のなかの `<h1>Hello!</h1>` という1行を妥当なJSX構文として受け入れる。もしもこの宣言がないとTypeScriptコンパイラはJSX構文を受け入れず、 `<h1>Hello!</h1>` を構文エラーとしてはじくだろう。
+
+=== `vite.config.ts` ファイル
+
+[source,json]
+----
+include::../minimal-minista-project/vite.config.ts[]
+----
+
+ここでministaが提供する `pluginSsg` プラグインを有効化すると宣言している。この宣言は重要だ。これが無いとあなたが `bun run build` コマンドを実行しても **S**tatic **s**ite **g**enerationの処理が行われないので `dist` 　ディレクトリの中に何も出力されないだろう。
+
+`pluginSsg` プラグインのドキュメントを一読しよう。
+
+* link:https://minista.qranoko.jp/docs/plugins/ssg[pluginSsgのドキュメント]
+
+`pluginSsg` プラグインがどんな設定項目を受け入れるか、それぞれの項目にどういう値を与えるべきかを理解することが、ministaに入門するための最初の一歩です。

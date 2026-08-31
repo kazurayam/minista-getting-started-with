@@ -2,7 +2,7 @@
 :PAGES_URL: https://kazurayam.github.io/minista-getting-started-with
 :projectVersion: 0.0.0
 
-= ministaに入門した話
+= スタティックサイトジェネレーター minista を試してみた
 
 include::./01_abstract.adoc[]
 
@@ -12,7 +12,7 @@ include::./03_minimal-minista-project.adoc[]
 
 include::./04_my-minista-project.adoc[]
 
-include::./05_minista-docs.adoc[]
+include::./05_minista-docs-project.adoc[]
 
 include::./06_conclusion.adoc[]
 

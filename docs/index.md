@@ -7,9 +7,9 @@
 
 わたしはWebプログラミングを中心にいろいろ学んで作って楽しんでいる。ある学術団体の事務職員をしていて、その団体のインターネットホームページの管理を任された。そのサイトは古き良きHTMLサイトで、数十のHTMLファイルとCSSファイルから構成されている。たくさんのHTMLの中に `<head>` と `<nav>` と `<footer>` があって、ほとんど同じコードが重複して存在している。数年前、外部のWebデザイナに発注して初期構築したらしい。受託したデザイナが何らかのオーサリングツールでソースを書き、ビルドした成果物がApacheサーバのhtdocsディレクトリの下に配置されている。デザイナがどういうツールを使ったのかはわからない。デザイナから発注主へソースコードを納入するということはしなかったようだ。たぶん発注主が「ソースって何？要らないよ。よくわからないから」と言ったんじゃないかと推測している。
 
-わたしは今でも必要に応じてこのサイトに **What’s News** 的な記事を追加するべくエディタでHTMLを修正している。このやり方でメンテナンスを続けるのは厳しいなあと感じている。近い将来、誰かにサイトの管理役を引き継ぐことになるだろう。その時HTMLの山をホイと渡してあとは知らんぷりするのは気がとがめる。今どきのソフトウェア技術を導入してホームページのメンテナンス作業を楽にしたい、と思った。
+わたしは今でも必要に応じてこのサイトにWhat’s News的な記事を追加するべくエディタでHTMLを修正している。このやり方でメンテナンスを続けるのは厳しいなあと感じている。近い将来、誰かにサイトの管理役を引き継ぐことになるだろう。その時HTMLの山をホイと渡してあとは知らんぷりするのは気がとがめる。今どきのソフトウェア技術を導入してホームページのメンテナンス作業を楽にしたい、と思った。
 
-いくつかのページをJSXで作り直してみた。それはもちろんできる。JSXを導入すればコードをコンポーネント化することができてコードの重複を排除できるのがうれしい。しかしこのサイトをReactによる **Single Page Application** に移行したいと望んではいない。閲覧オンリーなサイトだから、Reactの会話的ユーザーインタフェースは必要ない。レンタルサーバー上のApacheサーバに静的HTMLとCSSを配置しただけのサイトの現状構成を変えてNode.jsのサーバに移行すべき理由がない。SPAにしたら団体の人に「ホームページの応答が遅くなった」といわれるだろうし。どうしようか…​と迷走しているうちに [minista](https://minista.qranoko.jp/) を見つけた。
+いくつかのページをJSXで作り直してみた。それはもちろんできる。JSXを導入すればコードをコンポーネント化することができてコードの重複を排除できるのがうれしい。しかしこのサイトをReactによる Single Page Application に移行したいと望んではいない。閲覧オンリーなサイトだからReactの会話的ユーザーインタフェースは必要ない。レンタルサーバー上のApacheサーバに静的HTMLとCSSを配置しただけの現状の構成を変えてNode.jsの上でサーバに移行すべき理由がない。SPAにしたらきっと団体の人に「ホームページの応答が遅くなった」といわれるだろうし。さてどうしようか…​と迷走しているうちに [minista](https://minista.qranoko.jp/) を見つけた。
 
 > minista（ミニスタ）は、ReactのJSXとViteで100%静的なサイトを作るスタティックサイトジェネレーターです。
 
@@ -18,9 +18,9 @@
 -   [build したらエラ〜発生: ReferenceError: document is not defined
     \#146](https://github.com/qrac/minista/issues/146#event-30162718761)
 
-このissueにキスパートが応えてくれておおいに学ぶところがあった。
+このissueにキスパートが応えてくれて大いに学ぶところがあった。
 
-ministaの公式ドキュメントには製品に関する詳細な情報が盛られている。しかし未経験者が読むべき初歩的な手引きが見当たらなかった。そこでわたしの経験をネタに Getting Started with minista を書くことにした。
+ministaの公式ドキュメントには製品に関する詳細な情報が盛られている。しかし未経験者が読むべき初歩的な手引きが見当たらないと思った。そこでわたしの経験をネタに Getting Started with minista を書くことにした。
 
 ## 作業環境
 
@@ -258,9 +258,9 @@ ministaは `src/index.tsx` を入力として `dist/index.html` ファイルを�
       plugins: [pluginSsg()],
     })
 
-ここでministaが提供する `pluginSsg` プラグインを有効化すると宣言している。この宣言は重要だ。これが無いとあなたが `bun run build` コマンドを実行しても **S**tatic **s**ite **g**enerationの処理が行われないので `dist` 　ディレクトリの中に何も出力されないだろう。
+ここでministaが提供する `pluginSsg` プラグインを有効化すると宣言している。この宣言は重要だ。これが無いとあなたが `bun run build` コマンドを実行してもviteはministaによる **S**tatic **s**ite **g**enerationの処理を実行しないので `dist` 　ディレクトリの中に何も出力されないだろう。
 
-`pluginSsg` プラグインのドキュメントを一読しよう。
+ここで `pluginSsg` プラグインのドキュメントをぜひ一読してほしい。
 
 -   [pluginSsgのドキュメント](https://minista.qranoko.jp/docs/plugins/ssg)
 
@@ -268,7 +268,80 @@ ministaは `src/index.tsx` を入力として `dist/index.html` ファイルを�
 
 ## my-minista-project
 
-TODO
+ministaの書き方を習うために少し中身のあるプロジェクトを作ろう。
+
+1.  複数のページを持つサイトのサンプルを作ろう
+
+2.  複数ページが共通のレイアウトに従うこととする
+
+3.  レイアウトには `<head>` と `<nav>` と `<footer>` を持たせよう
+
+4.  レイアウトを表現するコンポーネントを各々独立した `.jsx` ファイルにしよう
+
+5.  CSSを組み込もう
+
+6.  画像も入れよう
+
+複数の `.jsx` ファイルと `.css` ファイルと `.jpeg` ファイルをどのようなファイル構造の中に配置するか、それに応じてministaのpluginをどのように設定するかが注目すべきポイントだ。
+
+`$ROOT` の下に `my-minista-project` を作ろう。プロジェクトフォルダの名前はユニークにしなければならないが、その他の手順は `minimal-minista-project` と作るのと同じ。
+
+    $ cd $ROOT
+    $ bun create minista@latest my-minista-project -- --template minista.ts
+    $ cd my-minista-project
+    $ bun install
+
+### 1. `src/index.jsx` を削除する
+
+`bun create minista@latest` コマンドに `--template minista.ts` とテンプレートを指定したので `src/index.tsx` ファイルが生成された。このファイルを削除してください。`my-minista-project` のためにこのファイルは不要だから。
+
+### 2. `vite.config.js` を書き換える
+
+次に `vite.config.js` を次のように書きかえる。
+
+    import { defineConfig, pluginSsg, pluginBundle, pluginBeautify } from "minista"
+
+    export default defineConfig({
+      plugins: [
+        pluginSsg({
+          layout: "/src/layouts/index.{tsx,jsx}",
+          src: ["/src/pages/**/*.{tsx,jsx,mdx,md}"],
+          srcBases: ["/src/pages"],
+        }),
+        pluginBundle({
+          src: ["/src/layouts/index.{tsx,jsx}", "/src/pages/**/*.{tsx,jsx,mdx}"],
+          outName: "bundle",
+          useExportCss: true,
+        }),
+        pluginBeautify()
+      ],
+    })
+
+３つのministaプラグインを使おうとしています。ドキュメントをそれぞれ一読してください。
+
+-   [pluginSsgのドキュメント](https://minista.qranoko.jp/docs/plugins/ssg)
+
+-   [pluginBundleのドキュメント](https://minista.qranoko.jp/docs/plugins/bundle)
+
+-   [pluginBeautifyのドキュメント](https://minista.qranoko.jp/docs/plugins/beautify)
+
+`pluginSsg` と `pluginBundle` はministaプロジェクトではおそらく必ず使うことになる重要プラグインです。
+
+`pluginSsg` プラグインの設定を下記のように書きました。
+
+      plugins: [
+        pluginSsg({
+          layout: "/src/layouts/index.{tsx,jsx}",
+          src: ["/src/pages/**/*.{tsx,jsx,mdx,md}"],
+          srcBases: ["/src/pages"],
+        }),
+
+実はこの設定はデフォルト値そのものです。だから
+
+      plugins: [
+        pluginSsg(),
+
+と書いても同じことです。`my-minista-project` では設定を明示的にコードとして書きました。ドキュメントをいちいち参照して思い出すよりもコードとして読めるほうが初学者には楽だからです。
 
 ## minitaレポジトリのdocsプロジェクト
 

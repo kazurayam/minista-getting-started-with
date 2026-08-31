@@ -237,9 +237,9 @@ include::../minimal-minista-project/tsconfig.json[]
 include::../minimal-minista-project/vite.config.ts[]
 ----
 
-ここでministaが提供する `pluginSsg` プラグインを有効化すると宣言している。この宣言は重要だ。これが無いとあなたが `bun run build` コマンドを実行しても **S**tatic **s**ite **g**enerationの処理が行われないので `dist` 　ディレクトリの中に何も出力されないだろう。
+ここでministaが提供する `pluginSsg` プラグインを有効化すると宣言している。この宣言は重要だ。これが無いとあなたが `bun run build` コマンドを実行してもviteはministaによる **S**tatic **s**ite **g**enerationの処理を実行しないので `dist` 　ディレクトリの中に何も出力されないだろう。
 
-`pluginSsg` プラグインのドキュメントを一読しよう。
+ここで `pluginSsg` プラグインのドキュメントをぜひ一読してほしい。
 
 * link:https://minista.qranoko.jp/docs/plugins/ssg[pluginSsgのドキュメント]
 

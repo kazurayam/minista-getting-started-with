@@ -1,3 +1,65 @@
 == my-minista-project
 
-TODO
+ministaの書き方を習うために少し中身のあるプロジェクトを作ろう。
+
+1. 複数のページを持つサイトのサンプルを作ろう
+2. 複数ページが共通のレイアウトに従うこととする
+3. レイアウトには `<head>` と `<nav>` と `<footer>` を持たせよう
+4. レイアウトを表現するコンポーネントを各々独立した `.jsx` ファイルにしよう
+5. CSSを組み込もう
+6. 画像も入れよう
+
+複数の `.jsx` ファイルと `.css` ファイルと `.jpeg` ファイルをどのようなファイル構造の中に配置するか、それに応じてministaのpluginをどのように設定するかが注目すべきポイントだ。
+
+`$ROOT` の下に `my-minista-project` を作ろう。プロジェクトフォルダの名前はユニークにしなければならないが、その他の手順は `minimal-minista-project` と作るのと同じ。
+
+[source,shell]
+----
+$ cd $ROOT
+$ bun create minista@latest my-minista-project -- --template minista.ts
+$ cd my-minista-project
+$ bun install
+----
+
+=== 1. `src/index.jsx` を削除する
+
+`bun create minista@latest` コマンドに `--template minista.ts` とテンプレートを指定したので `src/index.tsx` ファイルが生成された。このファイルを削除してください。`my-minista-project` のためにこのファイルは不要だから。
+
+=== 2. `vite.config.js` を書き換える
+
+次に `vite.config.js` を次のように書きかえる。
+
+[source,javascript]
+----
+include::../my-minista-project/vite.config.js[]
+----
+
+３つのministaプラグインを使おうとしています。ドキュメントをそれぞれ一読してください。
+
+* link:https://minista.qranoko.jp/docs/plugins/ssg[pluginSsgのドキュメント]
+* link:https://minista.qranoko.jp/docs/plugins/bundle[pluginBundleのドキュメント]
+* link:https://minista.qranoko.jp/docs/plugins/beautify[pluginBeautifyのドキュメント]
+
+`pluginSsg` と `pluginBundle` はministaプロジェクトではおそらく必ず使うことになる重要プラグインです。
+
+`pluginSsg` プラグインの設定を下記のように書きました。
+
+[source,javascript]
+----
+  plugins: [
+    pluginSsg({
+      layout: "/src/layouts/index.{tsx,jsx}",
+      src: ["/src/pages/**/*.{tsx,jsx,mdx,md}"],
+      srcBases: ["/src/pages"],
+    }),
+----
+
+実はこの設定はデフォルト値そのものです。だから
+
+[source,javascript]
+----
+  plugins: [
+    pluginSsg(),
+----
+
+と書いても同じことです。`my-minista-project` では設定を明示的にコードとして書きました。ドキュメントをいちいち参照して思い出すよりもコードとして読めるほうが初学者には楽だからです。

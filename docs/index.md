@@ -5,7 +5,9 @@
 
 GitHubレポジトリ: <https://github.com/kazurayam/minista-getting-started-with/>
 
-## 背景
+## はじめに
+
+### 背景
 
 わたしはWebプログラミングを中心にいろいろ学んで作って楽しんでいる。ある学術団体の事務職員をしていて、その団体のインターネットホームページの管理を任された。そのサイトは古き良きHTMLサイトで、数十のHTMLファイルとCSSファイルから構成されている。たくさんのHTMLの中に `<head>` と `<nav>` と `<footer>` があって、ほとんど同じコードが重複して存在している。数年前、外部のWebデザイナに発注して初期構築したらしい。受託したデザイナが何らかのオーサリングツールでソースを書き、ビルドした成果物がApacheサーバのhtdocsフォルダの下に配置されている。デザイナがどういうツールを使ったのかはわからない。デザイナから発注主へソースコードを納入するということはしなかったようだ。たぶん発注した人が「ソースって何？納品しなくていいよ。よくわからないから」といったんじゃないかと推測している。
 
@@ -23,6 +25,18 @@ GitHubレポジトリ: <https://github.com/kazurayam/minista-getting-started-wit
 このissueにキスパートが応えてくれた。おおいに学ぶところがあった。
 
 ministaの公式ドキュメントに詳細情報が書かれている。しかし未経験者が迷わず読み通せる初歩的な手引きがないとわたしは思った。そこで自分の経験をネタに Getting Started with minista を書くことにした。
+
+### 対象読者
+
+-   TypeScriptでWebアプリを開発するスキルを持っている人
+
+-   React JSXでページを書きたい、しかし最終的には静的HTMLサイトを作りたいと望んでいる人
+
+-   ministaをまだ知らない人
+
+### 記事を読むメリット
+
+ReactのJSXとViteで100%静的なサイトを作るスタティックサイトジェネレーター [minista](https://minista.qranoko.jp/) に入門することができる。ある程度のボリュームのある実行可能なサンプルコードに触れることができる。
 
 ## わたしの作業環境
 
@@ -679,8 +693,4 @@ ministaのGitHubレポジトリに `docs` フォルダがある。
 
 ## 結び
 
-わたしはministaを使って静的HTMLサイトを作ることに成功した。わたしがいま担当しているHTMLオンリーなWebサイトをJSXで書き直すのにministaがきっと役立つでしょう。JSXの利点を享受しつつも、無理にSingle Page Applicationに移行する愚を避けて、Apacheサーバのhtdocsフォルダ下に静的HTML+CSSを置くだけの現状のシステム構成を継承することができる。
-
-[`pluginMdx`](https://minista.qranoko.jp/docs/plugins/mdx) を導入すれば、What\`s NewsページのコンテンツをMarkdown構文のテキストで書けるようになる。某学術団体インターネット・ホームページのメンテナンスは数段やさしくなるに違いない。近い将来、ITに詳しくない人に役を引き継ぐことも不可能でなくなるだろう。
-
-これからもっとministaを深掘りします。
+わたしはministaを使って静的HTMLサイトを作ることに成功した。わたしがいま担当しているHTMLオンリーなWebサイトをJSXで書き直すのにministaがきっと役立つ。JSXの利点を享受しつつも、無理にSingle Page Applicationに移行する愚を避けて、Apacheサーバのhtdocsフォルダ下に静的HTML+CSSを置くだけの現状のシステム構成を継承することができる。さらに [`pluginMdx`](https://minista.qranoko.jp/docs/plugins/mdx) を導入すれば、What\`s NewsページのコンテンツをMarkdown構文のテキストで書けるようになる。某学術団体インターネット・ホームページのメンテナンスは数段やさしくなるに違いない。これからもっとministaを深掘りしていきます。

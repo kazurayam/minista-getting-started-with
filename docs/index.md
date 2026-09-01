@@ -1,26 +1,28 @@
 - Table of contents
 {:toc}
 
-# スタティックサイトジェネレーター minista を試してみた
+# スタティックサイトジェネレーター minista 事始め
+
+GitHubレポジトリ: <https://github.com/kazurayam/minista-getting-started-with/>
 
 ## 背景
 
-わたしはWebプログラミングを中心にいろいろ学んで作って楽しんでいる。ある学術団体の事務職員をしていて、その団体のインターネットホームページの管理を任された。そのサイトは古き良きHTMLサイトで、数十のHTMLファイルとCSSファイルから構成されている。たくさんのHTMLの中に `<head>` と `<nav>` と `<footer>` があって、ほとんど同じコードが重複して存在している。数年前、外部のWebデザイナに発注して初期構築したらしい。受託したデザイナが何らかのオーサリングツールでソースを書き、ビルドした成果物がApacheサーバのhtdocsディレクトリの下に配置されている。デザイナがどういうツールを使ったのかはわからない。デザイナから発注主へソースコードを納入するということはしなかったようだ。たぶん発注した人が「ソースって何？納品しなくていいよ。よくわからないから」といったんじゃないかと推測している。
+わたしはWebプログラミングを中心にいろいろ学んで作って楽しんでいる。ある学術団体の事務職員をしていて、その団体のインターネットホームページの管理を任された。そのサイトは古き良きHTMLサイトで、数十のHTMLファイルとCSSファイルから構成されている。たくさんのHTMLの中に `<head>` と `<nav>` と `<footer>` があって、ほとんど同じコードが重複して存在している。数年前、外部のWebデザイナに発注して初期構築したらしい。受託したデザイナが何らかのオーサリングツールでソースを書き、ビルドした成果物がApacheサーバのhtdocsフォルダの下に配置されている。デザイナがどういうツールを使ったのかはわからない。デザイナから発注主へソースコードを納入するということはしなかったようだ。たぶん発注した人が「ソースって何？納品しなくていいよ。よくわからないから」といったんじゃないかと推測している。
 
-わたしは今でも必要に応じてこのサイトにWhat’s News的な記事を追加するべくエディタでHTMLを修正している。このやり方でメンテナンスを続けるのは厳しいなあと感じている。近い将来、誰かにサイトの管理役を引き継ぐことになるだろう。その時HTMLの山をホイと渡してあとは知らんぷりするのは気がとがめる。今どきのソフトウェア技術を導入してホームページのメンテナンス作業を楽にしたい、と思った。
+わたしはこのサイトにWhat’s News的な記事を追加するためにエディタでHTMLを修正しているが、このやり方でメンテナンスを続けるのはキビしいなあと感じている。近い将来、誰かにサイトの管理役を引き継ぐことになるだろう。その時HTMLの山をホイと渡してあとは知らんぷりするのは気がとがめる。今どきのソフトウェア技術を導入してホームページのメンテナンス作業を楽にしたい、と思った。
 
-いくつかのページをJSXで作り直してみた。それはもちろんできる。JSXを導入すればコードをコンポーネント化することができてコードの重複を排除できるのがうれしい。しかしこのサイトをReactによる Single Page Application に移行したいわけではない。閲覧オンリーなサイトだからReactの会話的ユーザーインタフェースは必要ない。レンタルサーバー上のApacheサーバに静的HTMLとCSSを配置しただけの現状の構成を変えてNode.jsのサーバに移行すべき理由がない。SPAにしたら「ホームページの応答が遅くなった」といわれるかもしれないし。さてどうしようか…​と迷っているうちに [minista](https://minista.qranoko.jp/) を見つけた。
+サイトのページをJSXで作り直してみた。それはもちろんできる。JSXならコンポーネント化することができてコードの重複を排除できるのがうれしい。しかしこのサイトをReactによる Single Page Application に移行したいわけではない。そもそも閲覧オンリーなサイトだからReactの会話的ユーザーインタフェースは必要ない。レンタルサーバー上のApacheサーバに静的HTMLとCSSを配置しただけの現状の構成を捨ててNode.jsのサーバに移行すべき理由がない。SPAにしたら「ホームページの応答が遅くなった」といわれるかもしれないし。さてどうしようか…​と迷っているうちに [minista](https://minista.qranoko.jp/) を見つけた。
 
 > minista（ミニスタ）は、ReactのJSXとViteで100%静的なサイトを作るスタティックサイトジェネレーターです。
 
-これ、わたしのニーズにあっているかもしれないと思った。ministaのドキュメント [”Setup”](https://minista.qranoko.jp/docs/setup) を手始めにいろいろ試した。途中行き詰まったこともある。ministaのGitHubレポジトリにissueを投げた。
+これ、わたしのニーズにあっているかもしれないと思った。ministaのドキュメント [”Setup”](https://minista.qranoko.jp/docs/setup) を手始めにいろいろ試した。途中行き詰まったこともあった。ministaのGitHubレポジトリにissueを投げた。
 
 -   [build したらエラ〜発生: ReferenceError: document is not defined
     \#146](https://github.com/qrac/minista/issues/146#event-30162718761)
 
 このissueにキスパートが応えてくれて大いに学ぶところがあった。
 
-ministaの公式ドキュメントには製品に関する詳細な情報が盛られている。しかし未経験者が読むべき初歩的な手引きが見当たらないと思った。そこでわたしの経験をネタに Getting Started with minista を書くことにした。
+ministaの公式ドキュメントには詳細情報が盛られている。しかし未経験者が読むべき初歩的な手引きがない。そこでわたしの経験をネタに Getting Started with minista を書くことにした。
 
 ## 作業環境
 
@@ -30,11 +32,11 @@ ministaの公式ドキュメントには製品に関する詳細な情報が盛�
 
 -   JavaScript Runtime: Bun 1.4.0
 
-minitaの公式ドキュメントはJavaScriptランタイムとして [npm](https://bun.sh/) を使っている。わたしは個人的な好みにより [bun](https://bun.sh/) を使った。わたしの見る限り問題ない。
+minitaの公式ドキュメントはJavaScriptランタイムとして [npm](https://bun.sh/) を使っているが、わたしは個人的な好みにより [bun](https://bun.sh/) を使った。わたしの見るかぎり問題なかった。
 
-## minimal-minista-project
+## minimal-minista-project プロジェクト
 
-まず手元のPCに適当なディレクトリを作った。そのディレクトリのパスをシェル変数 `ROOT` で参照できるようにした。
+まず手元のPCに適当なフォルダを作った。そのフォルダのパスをシェル変数 `ROOT` で参照できるようにした。
 
     $ cd ~/tmp
     $ mkdir minista-getting-started-with
@@ -152,7 +154,7 @@ ministaの公式ドキュメント [Setup / minista](https://minista.qranoko.jp/
 
 #### コマンド2 `bun run build`
 
-コマンドラインで `bun run dev` とやるとViteによるビルドが実行される。 ビルドによって `dist` ディレクトリが作られ、その中にWebサイトを構成するHTMLやCSSや画像ファイルが出力される。`dist` ディレクトリの中に作られたHTML＋CSS＋画像一式をApacheサーバのhtdocsディレクトリの下にFTPでアップロードすれば、高速で応答するWebサイトができるだろう。
+コマンドラインで `bun run dev` とやるとViteによるビルドが実行される。 ビルドによって `dist` フォルダが作られ、その中にWebサイトを構成するHTMLやCSSや画像ファイルが出力される。`dist` フォルダの中に作られたHTML＋CSS＋画像一式をApacheサーバのhtdocsフォルダの下にFTPでアップロードすれば、高速で応答するWebサイトができるだろう。
 
     $ cd $ROOT/minimal-minista-project
     $ bun run build
@@ -170,7 +172,7 @@ ministaの公式ドキュメント [Setup / minista](https://minista.qranoko.jp/
 
     ✓ built in 41ms
 
-`minimal-minista-project` の `dist` ディレクトリの中身を見てみよう。
+`minimal-minista-project` の `dist` フォルダの中身を見てみよう。
 
     $ tree dist
     dist
@@ -182,7 +184,7 @@ minista が `src/index.tsx` から `dist/index.html` を生成した。これを
 
 #### コマンド３ `bun run preview`
 
-コマンドラインで `bun run dev` とやるとViteの開発サーバが立ち上がる。すると `dist` ディレクトリの中に生成された静的HTML＋CSSのサイトが閲覧できる。
+コマンドラインで `bun run dev` とやるとViteの開発サーバが立ち上がる。すると `dist` フォルダの中に生成された静的HTML＋CSSのサイトが閲覧できる。
 
     $ minista preview
       ➜  Local:   http://localhost:4173/
@@ -258,7 +260,7 @@ ministaは `src/index.tsx` を入力として `dist/index.html` ファイルを�
       plugins: [pluginSsg()],
     })
 
-ここでministaが提供する `pluginSsg` プラグインを有効化すると宣言している。この宣言は重要だ。これが無いとあなたが `bun run build` コマンドを実行してもviteはministaによる **S**tatic **s**ite **g**enerationの処理を実行しないので `dist` 　ディレクトリの中に何も出力されないだろう。
+ここでministaが提供する `pluginSsg` プラグインを有効化すると宣言している。この宣言は重要だ。これが無いとあなたが `bun run build` コマンドを実行してもviteはministaによる **S**tatic **s**ite **g**enerationの処理を実行しないので `dist` 　フォルダの中に何も出力されないだろう。
 
 ここで `pluginSsg` プラグインのドキュメントをぜひ一読してほしい。
 
@@ -266,34 +268,40 @@ ministaは `src/index.tsx` を入力として `dist/index.html` ファイルを�
 
 `pluginSsg` プラグインがどんな設定項目を受け入れるか、それぞれの項目にどういう値を与えるべきかを理解することが、ministaに入門するための最初の一歩です。
 
-## my-minista-project
+## my-minista-project　プロジェクト
 
-ministaの書き方を習うために少し中身のあるプロジェクトを作ろう。次のような方針のもとに:
+ministaの使い方を習うために少し中身のあるプロジェクトを作ろう。次のような方針のもとに:
 
 1.  １つきりではなく複数のページから成るサイトのサンプルを作ろう
 
-2.  トップページのURLパスは `/` とする。このほかにサブディレクトリを持つURLを作る。たとえば `/about/` のように。
+2.  トップページのURLパスは `/` とする。このほかにサブフォルダを持つURLを作る。たとえば `/about/` のように。
 
-3.  共通のレイアウトを作り、すべてのページがそれに従うこととする
+3.  共通レイアウトを作り、すべてのページがそれに従うこととする
 
-4.  レイアウトを `<head>` と `<nav>` と `<footer>` で構成する
+4.  レイアウトをHTML要素 `<head>` と `<nav>` と `<footer>` などで構成する
 
-5.  レイアウトを表現するコンポーネントを各々独立した `.jsx` ファイルにする。一つのページを複数のコンポーネントの組み合わせで実現する。
+5.  レイアウト部品を各々独立した `.jsx` ファイルにする。一つのページを複数のコンポーネントの組み合わせで実装する。
 
-6.  CSSでページのスタイルを定義する。`<head>` と `<nav>` と `<footer>` の背景色を塗り分けて見やすくしよう。
+6.  CSSでページのスタイルを定義する。`<head>` と `<nav>` と `<footer>` の背景色を塗り分けて見やすくするとか。
 
 7.  コンテンツの一部として写真も表示しよう
 
-`$ROOT` の下に `my-minista-project` を作ろう。プロジェクトフォルダの名前はユニークにしなければならないが、その他の手順は `minimal-minista-project` と作るのと同じ。
+最終的には `my-minista-project` プロジェクトは下記のような姿のWebページを応答します。
+
+![002 my minista project](https://kazurayam.github.io/minista-getting-started-with/images/002_my-minista-project.png)
+
+それでは `$ROOT` の下に `my-minista-project` を作ろう。手順は `minimal-minista-project` と作るのと同じ。ただしプロジェクトフォルダの名前をユニークなものにする点だけ気をつけて。
 
     $ cd $ROOT
     $ bun create minista@latest my-minista-project -- --template minista.ts
     $ cd my-minista-project
     $ bun install
 
+下書きされた `my-minista-project` を書きかえていく。順を追って説明しよう。
+
 ### 1. `src/index.jsx` を削除する
 
-`bun create minista@latest` コマンドに `--template minista.ts` とテンプレートを指定したので `src/index.tsx` ファイルが生成された。このファイルを削除してください。`my-minista-project` のためにこのファイルは不要だから。
+`bun create minista@latest` コマンドに `--template minista.ts` と指定した。このテンプレートの定義に従って `src/index.tsx` ファイルが生成された。しかし `my-minista-project` でこのtsxファイルは不要だ。だから削除する。
 
 ### 2. `vite.config.js` を書き換える
 
@@ -325,9 +333,11 @@ ministaの書き方を習うために少し中身のあるプロジェクトを�
 
 -   [pluginBeautifyのドキュメント](https://minista.qranoko.jp/docs/plugins/beautify)
 
-`pluginSsg` と `pluginBundle` はministaプロジェクトではおそらく必ず使うことになる重要プラグインです。
+`pluginSsg` と `pluginBundle` はどのministaプロジェクトも使うであろう重要なプラグインです。
 
-**`pluginSsg` プラグインのオプションの設定と `my-minista-project` プロジェクトの実際のフォルダ構成とが整合性が取れていること** が重要だ。もしも `pluginSsg` の設定と実際のフォルダ構成が食い違っていると `bun run build` コマンドを実行した時にstatic site generationの処理が空振りするので、`dist` ディレクトリの中に期待したような成果物が作られないだろう。
+**`pluginSsg` プラグインのオプションの設定と `my-minista-project` プロジェクトの実際のフォルダ構成とを整合させること** がとても重要です。
+
+もしも `pluginSsg` の設定と実際のフォルダ構成が食い違っていると `bun run build` コマンドを実行した時にministaによるstatic site generationの処理が空振りする。エラーメッセージが出力されるわけではない。期待したような成果物が `dist` フォルダに出力されないだけだ。あれえ？と首をかしげるだろう。
 
 `my-minista-project` プロジェクトにおいてわたしは `pluginSsg` プラグインの設定を下記のように書きました。
 
@@ -343,13 +353,9 @@ ministaの書き方を習うために少し中身のあるプロジェクトを�
       plugins: [
         pluginSsg(),
 
-と書いても同じことです。`my-minista-project` では設定を明示的に書いたのは、ドキュメントをいちいち参照するよりもコードを読み返す方が楽だからです。
+と書いても同じことです。`my-minista-project` で設定をコードに明示したのは、ブラウザでドキュメントを参照するよりもエディタでコードを読み返す方が楽だからです。
 
-さて、plusginSsgの設定を上記のように決定したので、それに呼応してフォルダ構成がどうあるべきかが決まり、JSXファイルとCSSファイルと画像ファイルをどこに配置するかが決まります。
-
-`pluginSsg` のオプションのデフォルト値がminista開発者の意見を反映していることは当然でしょう。
-
-わたしは `my-minista-project` のフォルダ構成を下記のようにしました。
+**ministaプロジェクトのフォルダ構成をどうすべきか？ministaの開発者のオススメを `pluginSsg` プラグインのデフォルト値から読み取ることができます。** minista開発者の考えを推し量りつつ わたしは `my-minista-project` のフォルダ構成を下記のようにしました。
 
     $ tree -I 'node_modules|dist' my-minista-project
     my-minista-project
@@ -375,13 +381,13 @@ ministaの書き方を習うために少し中身のあるプロジェクトを�
     ├── tsconfig.json
     └── vite.config.js
 
-なぜこのようなフォルダ構成にしたのか？理由を説明します。
+なぜこのような構成にしたのか？以下に補足します。
 
-#### `src` ディレクトリ
+#### `src` フォルダ
 
-ソースとしてのJSXファイルとCSSファイル画像ファイルをすべて `my-minista-project/src` ディレクトリの下に格納することにします。あとで `bun run build` コマンドを実行した時に成果物が `my-minista-project/dist` ディレクトリに出力されるはず。入力元としての\`src\` と出力先 `dist` というふうに二つを対照的に配置するのが見やすくて良い。
+ソースとしてのJSXファイルとCSSファイル画像ファイルをすべて `my-minista-project/src` フォルダの下に格納することにします。あとで `bun run build` コマンドを実行した時に成果物が `my-minista-project/dist` フォルダに出力されるはず。入力元としての\`src\` と出力先 `dist` というふうに二つを対照的に配置するのが見やすくて良い。
 
-#### `src/layouts`
+#### `src/layouts` フォルダ
 
 サイトのすべてのページが共通のレイアウトに従うように作るという設計方針にしたがい、レイアウトを規定するJSXファイル `my-minista-project/src/layouts/index.tsx` を作りました\`pluginSsg\` プラグインの `` layout ` オプションが `layout: "/src/layouts/index.{tsx,jsx}", `` と設定されていることと整合が取れていなければなりません。
 
@@ -421,41 +427,265 @@ HTML要素 `<head>` を実装するJSXファイルを下記のように書きま
         )
     }
 
-`header.jsx` ファイルを `/src/layouts/` ディレクトリの中に配置しました。その一方でレイアウトを実装するJSXが
+`header.jsx` ファイルを `/src/layouts/` フォルダの中に配置しました。その一方でレイアウトを実装するJSXが
 
 `import { MyHeader } from "./header"`
 
-とやってインポートしています。`header.jsx` が `my-minista-project/src/layouts/` ではない別の場所にあっても本来は構わない。`import` 文の `from "fffff"` を適切に書けば解決できる。しかしレイアウトを構成する複数のJSXを１箇所に集めた方が見通しが良い。そこで `header.jsx` を `src/layouts/` ディレクトリに配置した 。`nav` や `footer` についても同じ考えを適用した。
+とやってインポートしています。`header.jsx` が `my-minista-project/src/layouts/` ではない別の場所にあっても本来は構わない。`import` 文の `from "fffff"` を適切に書けば解決できる。しかしレイアウトを構成する複数のJSXを１箇所に集めた方が見通しが良い。そこで `header.jsx` を `src/layouts/` フォルダに配置した 。`nav` や `footer` についても同じ考えを適用した。
 
-#### `src/pages/`
+#### `layout` オプション
 
-ページを実装するJSXファイルを `my-minista-project/src/pages/` ディレクトリの中に格納しました。Webサイトが起動した時に `my-minista-project/src/pages/index.tsx` ファイルがURL `http://localhost:xxxx/` に対応します。
+`vite.config.js` ファイルの `pluginSsg` プラグインの設定にこう書いた。
 
-`my-minista-project/src/pages/about/index.tsx` ファイルがURL `http://localhost:xxxx/about/` に対応します。このように `pages` ディレクトリの下のファイルの相対パスがURLのサブパスと一対一に対応します。
+      plugins: [
+        pluginSsg({
+          layout: "/src/layouts/index.{tsx,jsx}",
 
-#### `srcBases`
+`layout` とは何なのか？ [ドキュメント](https://minista.qranoko.jp/docs/plugins/ssg#layout) にこう書いてある。
 
-`pluginSsg` プラグインの設定をこう書いた。
+> layout
+> すべてのページテンプレートをラップするコンポーネントの場所を指定します。対象ファイルはViteの機能でglob importされ最初に見つかったファイルが使用されます。
 
-    srcBases: ["/src/pages"],
+具体的に `my-minista-project/src/layout/index.tsx` をどのように書いたかというと、下記の通り。
 
-ドキュメントの [srcBases](https://minista.qranoko.jp/docs/plugins/ssg#srcbases) にこう書いてある。
+    import type { LayoutProps } from "minista/types"
+    import { Head } from "minista/head"
 
+    import { MyHeader } from "./header"
+    import { MyNav } from "./nav"
+    import { MyFooter} from "./footer"
+
+    export default function (props: LayoutProps) {
+      return (
+        <>
+          <Head htmlAttributes={{ lang: "en" }}>
+            <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+            <title>my-minista-project</title>
+          </Head>
+          <MyHeader />
+          <MyNav />
+          <main className="myMain">
+            {props.children}
+          </main>
+          <MyFooter />
+        </>
+      )
+    }
+
+わたしはここに出現する `LayoutProps` とか `Head` とかをまだわかっていません。いくつかのサンプルコードからコピペして動かしてみたら動いちゃっただけ。これから時間をかけてministaの理解を深めていきたいと思っています。
+
+#### `srcBases` オプション
+
+`pluginSsg` プラグインの設定にこう書いた。
+
+      plugins: [
+        pluginSsg({
+          ...
+          srcBases: ["/src/pages"],
+
+srcBasesについてドキュメントの [srcBases](https://minista.qranoko.jp/docs/plugins/ssg#srcbases) にこう書いてある。
+
+> srcBase
 > ページテンプレートをURLに変換する際に省くパス。前方一致で削除されます。
->
-> — 
-> text
 
-この設定があるので、ファイルパス `my-minista-project/src/pages/about/index.tsx` の中の `/src/pages` が省かれて `locahost:pppp/about/` というURLに対応づけられる、というルールが適用されます。
+この設定があるので、ファイルパス `my-minista-project/src/pages/about/index.tsx` の中の `/src/pages` の部分が省かれて `http://locahost:xxxx/about/` というURLに対応づけられる、というルールが適用されます。
 
-#### `src/assets/`
+#### `src/pages/` フォルダ
 
-CSSファイルと画像ファイルを `my-minista-project/src/assets/` の中に格納しました。
+ページを実装するJSXファイルを `my-minista-project/src/pages/` フォルダの中に格納しました。Webサイトが起動した時に `my-minista-project/src/pages/index.tsx` ファイルがURL `http://localhost:xxxx/` に対応します。
 
-## minitaレポジトリのdocsプロジェクト
+`my-minista-project/src/pages/about/index.tsx` ファイルがURL `http://localhost:xxxx/about/` に対応します。このように `pages` フォルダの下のファイルの相対パスがURLのサブパスと一対一に対応します。
 
-TODO
+#### `src/assets/` フォルダ
+
+`vite.config.ts` ファイルの中に `pluginBundle` の設定が書いてあります。
+
+        pluginBundle({
+          src: ["/src/layouts/index.{tsx,jsx}", "/src/pages/**/*.{tsx,jsx,mdx}"],
+          outName: "bundle",
+          useExportCss: true,
+        }),
+
+を参照のこと。実はこの設定は [pluginBundleのドキュメントのOptions](https://minista.qranoko.jp/docs/plugins/bundle#options) に示されたデフォルト値と同じです。だから
+
+      plugins: [
+        pluginBundle(),
+
+と書いても同じことです。
+
+`pluginBundle` の `src` オプションが何を意味するかというと
+
+> CSS・画像を検出するテンプレートをglob形式で指定します。対象ファイルはViteの機能でglob importされます。
+
+とのこと。例えば `/src/pages/index.tsx` には下記のようなimport文が書いてあります。
+
+    import "../assets/css/index.css"
+    import heroImg from "../assets/images/seagull.jpg"
+
+これに整合するように、`my-minista-project/src/assets/css` フォルダを作ってその中に `index.css` ファイルを格納しました。同じように `my-minista-project/src/assets/images` フォルダを作って画像ファイルを格納しました。こんなふうに:
+
+    $ cd $ROOT/my-minista-project
+    $ tree src/assets
+    src/assets
+    ├── css
+    │   └── index.css
+    └── images
+        ├── 20210515111349_p.jpg
+        ├── 4467417.jpeg
+        └── seagull.jpg
+
+#### `my-minista-project` のソース
+
+GitHubにレポジトリを作ってソースを公開しました。
+
+-   <https://github.com/kazurayam/minista-getting-started-with//tree/master/my-minista-project>
+
+個々のJSXやCSSのソースについてはGitHubレポジトリを参照してください。素朴なコードなので説明を省略します。
+
+#### buildするとこうなる
+
+    $ cd $ROOT/my-minista-project
+    $ bun run build
+
+    $ minista build
+    vite v8.2.2 building ssr environment for production...
+    ✓ 11 modules transformed.
+    computing gzip size...
+    node_modules/.minista/ssr/__minista-ssg.mjs  9.62 kB │ gzip: 5.22 kB
+
+    ✓ built in 151ms
+    vite v8.2.2 building client environment for production...
+    ✓ 19 modules transformed.
+    computing gzip size...
+    dist/index.html                    1.71 kB │ gzip: 0.82 kB
+    dist/about/index.html              6.15 kB │ gzip: 4.20 kB
+    dist/assets/seagull-DMex-28w.jpg  30.04 kB
+    dist/assets/bundle-PBukV8x2.css    0.65 kB │ gzip: 0.29 kB
+
+    ✓ built in 121ms
+
+`dist` フォルダに静的サイトを構成するファイル一式が生成されました。
+
+    $ cd $ROOT/my-minimal-project
+    $ tree -I 'node_modules' .
+    .
+    ├── bun.lock
+    ├── dist
+    │   ├── about
+    │   │   └── index.html
+    │   ├── assets
+    │   │   ├── bundle-PBukV8x2.css
+    │   │   └── seagull-DMex-28w.jpg
+    │   └── index.html
+    ├── package.json
+    ├── src
+    │   ├── assets
+    │   │   ├── css
+    │   │   │   └── index.css
+    │   │   └── images
+    │   │       ├── 20210515111349_p.jpg
+    │   │       ├── 4467417.jpeg
+    │   │       └── seagull.jpg
+    │   ├── layouts
+    │   │   ├── footer.tsx
+    │   │   ├── header.tsx
+    │   │   ├── index.tsx
+    │   │   └── nav.tsx
+    │   └── pages
+    │       ├── about
+    │       │   └── index.tsx
+    │       └── index.tsx
+    ├── tsconfig.json
+    └── vite.config.js
+
+`src` フォルダと `dist` フォルダを見比べると、ministaが `bun run build` の時にどんな処理をするのかを推察することができます。
+
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><code>src</code> フォルダのファイル</th>
+<th style="text-align: left;"><code>dist</code> フォルダ</th>
+<th style="text-align: left;">補足</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p><code>src/pages/index.tsx</code> →</p></td>
+<td style="text-align: left;"><p><code>dist/index.html</code></p></td>
+<td style="text-align: left;"><p><code>http://localhost:4173/</code> に対応する</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><code>src/pages/about/index.tsx</code> →</p></td>
+<td style="text-align: left;"><p><code>dist/about/index.html</code></p></td>
+<td style="text-align: left;"><p><code>http://localhost:4173/about/</code> に対応する</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><code>src/layouts/*.tsx</code> →</p></td>
+<td style="text-align: left;"><p>なし</p></td>
+<td style="text-align: left;"><p>コンポーネントは結合されて *.html ファイルになる</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><code>src/assets/css/index.css</code> →</p></td>
+<td style="text-align: left;"><p><code>dist/assets/bundle-PBukV8x2.css</code></p></td>
+<td style="text-align: left;"><p>ページのJSXが参照しているCSSファイル（複数可）の内容をマージして１つのCSSファイルにする</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><code>src/assets/images/seagull.jpg</code> →</p></td>
+<td style="text-align: left;"><p><code>dist/assets/images/seagull-DMex-28w.jpg</code></p></td>
+<td style="text-align: left;"><p>そのままコピー?
+00</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><code>src/assets/images/20210515111349_p.jpg</code> →</p></td>
+<td style="text-align: left;"><p>なし</p></td>
+<td style="text-align: left;"><p>HTMLが参照していない画像は無視される。 <code>dist</code> に出力されない</p></td>
+</tr>
+</tbody>
+</table>
+
+`dist` フォルダの中に生成された静的Webサイトを閲覧するには今まで通り `build run preview` コマンドを実行すればいい。サーバーが立ち上がったらブラウザで `http://localhost:4173` を開け。こんな画面が表示される。
+
+![003 my minista project about](https://kazurayam.github.io/minista-getting-started-with/images/003_my-minista-project-about.png)
+
+わたしもministaに入門することはできたかなと思う。
+
+## minista本家の `docs` プロジェクト
+
+ministaのGitHubレポジトリに `docs` フォルダがある。
+
+-   <https://github.com/qrac/minista/tree/main/docs>
+
+このフォルダは minista を使って静的Webサイトを生成するサンプルになっている。どういうWebサイトが生成されるのかというと以下のURLだ。
+
+-   <https://minista.qranoko.jp/docs/>
+
+つまりministaの公式ドキュメントのサイトそれ自体がministaを使って構築されているわけだ。
+
+公式ドキュメントを見ればministaがたくさんの機能（プラグイン）を提供することがわかる。しかしどう使えばいいのか、よくわからない。実際に動くサンプルを見たいなあ…​ そう思ったら [misista/docs](https://github.com/qrac/minista/tree/main/docs) フォルダを掘ってみると良い。宝物がゴロゴロ転がっている予感がします。
+
+たとえば
+
+-   <https://github.com/qrac/minista/tree/main/docs/src/pages/docs/plugins>
+
+を見てみよう。ministaのプラグインに関するドキュメントのソースコード群だ。
+
+![004 docs plugins ssg](https://kazurayam.github.io/minista-getting-started-with/images/004_docs_plugins_ssg.png)
+
+`pluginSsg` プラグインのドキュメントがこれ。
+
+-   <https://github.com/qrac/minista/blob/main/docs/src/pages/docs/plugins/ssg.mdx>
+
+あれ？ファイル名の拡張子が `.mdx` という見慣れない文字になっている。これをよく見るとMarkdown構文のテキストでした。ministaの公式ドキュメントのテキストのほとんどはMarkdownで書かれていました。
 
 ## 結び
 
-Markdownで書ける。良いなあ。使おう。
+ministaを使って静的HTMLサイトを作る作業を一通り経験することができた。わたしがいま担当しているHTMLオンリーなWebサイトのメンテナンス性の悪さを解消するのにministaが役立ちそうです。JSXの利点を享受しつつも、無理にSingle Page Applicationに移行する愚を避けて、Apacheサーバのhtdocsフォルダ下に静的HTMLとCSSを配備する現状のシステム構成を継承することができる。
+
+ページのコンテンツをMarkdown構文のテキストで書けるようにする [`pluginMdx`](https://minista.qranoko.jp/docs/plugins/mdx) を導入すれば、某学術団体のインターネット・ホームページのメンテナンスは今より数段やさしくなるだろう。ITに詳しくない人にこの仕事を引き継ぐことも不可能でなくなるだろう。
+
+これからもministaをもっと深掘りします。

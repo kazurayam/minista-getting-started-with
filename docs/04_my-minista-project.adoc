@@ -1,13 +1,13 @@
-== my-minista-project
+== my-minista-project　プロジェクト
 
-ministaの書き方を習うために少し中身のあるプロジェクトを作ろう。次のような方針のもとに:
+ministaの使い方を習うために少し中身のあるプロジェクトを作ろう。次のような方針のもとに:
 
 1. １つきりではなく複数のページから成るサイトのサンプルを作ろう
-2. トップページのURLパスは `/` とする。このほかにサブディレクトリを持つURLを作る。たとえば `/about/` のように。
-3. 共通のレイアウトを作り、すべてのページがそれに従うこととする
-4. レイアウトを `<head>` と `<nav>` と `<footer>` で構成する
-5. レイアウトを表現するコンポーネントを各々独立した `.jsx` ファイルにする。一つのページを複数のコンポーネントの組み合わせで実現する。
-6. CSSでページのスタイルを定義する。`<head>` と `<nav>` と `<footer>` の背景色を塗り分けて見やすくしよう。
+2. トップページのURLパスは `/` とする。このほかにサブフォルダを持つURLを作る。たとえば `/about/` のように。
+3. 共通レイアウトを作り、すべてのページがそれに従うこととする
+4. レイアウトをHTML要素 `<head>` と `<nav>` と `<footer>` などで構成する
+5. レイアウト部品を各々独立した `.jsx` ファイルにする。一つのページを複数のコンポーネントの組み合わせで実装する。
+6. CSSでページのスタイルを定義する。`<head>` と `<nav>` と `<footer>` の背景色を塗り分けて見やすくするとか。
 7. コンテンツの一部として写真も表示しよう
 
 最終的には `my-minista-project` プロジェクトは下記のような姿のWebページを応答します。
@@ -15,8 +15,7 @@ ministaの書き方を習うために少し中身のあるプロジェクトを�
 image:{PAGES_URL}/images/002_my-minista-project.png[]
 
 
-
-では `$ROOT` の下に `my-minista-project` を作ろう。プロジェクトフォルダの名前はユニークにしなければならないが、その他の手順は `minimal-minista-project` と作るのと同じ。
+それでは `$ROOT` の下に `my-minista-project` を作ろう。手順は `minimal-minista-project` と作るのと同じ。ただしプロジェクトフォルダの名前をユニークなものにする点だけ気をつけて。
 
 [source,shell]
 ----
@@ -26,11 +25,11 @@ $ cd my-minista-project
 $ bun install
 ----
 
-
+下書きされた `my-minista-project` を書きかえていく。順を追って説明しよう。 
 
 === 1. `src/index.jsx` を削除する
 
-`bun create minista@latest` コマンドに `--template minista.ts` とテンプレートを指定したので `src/index.tsx` ファイルが生成された。このファイルを削除してください。`my-minista-project` のためにこのファイルは不要だから。
+`bun create minista@latest` コマンドに `--template minista.ts` と指定した。このテンプレートの定義に従って `src/index.tsx` ファイルが生成された。しかし `my-minista-project` でこのtsxファイルは不要だ。だから削除する。
 
 === 2. `vite.config.js` を書き換える
 
@@ -47,9 +46,11 @@ include::../my-minista-project/vite.config.js[]
 * link:https://minista.qranoko.jp/docs/plugins/bundle[pluginBundleのドキュメント]
 * link:https://minista.qranoko.jp/docs/plugins/beautify[pluginBeautifyのドキュメント]
 
-`pluginSsg` と `pluginBundle` はministaプロジェクトではおそらく必ず使うことになる重要プラグインです。
+`pluginSsg` と `pluginBundle` はどのministaプロジェクトも使うであろう重要なプラグインです。
 
-**`pluginSsg` プラグインのオプションの設定と `my-minista-project` プロジェクトの実際のフォルダ構成とが整合性が取れていること** が重要だ。もしも `pluginSsg` の設定と実際のフォルダ構成が食い違っていると `bun run build` コマンドを実行した時にstatic site generationの処理が空振りするので、`dist` ディレクトリの中に期待したような成果物が作られないだろう。 
+**`pluginSsg` プラグインのオプションの設定と `my-minista-project` プロジェクトの実際のフォルダ構成とを整合させること** がとても重要です。
+
+もしも `pluginSsg` の設定と実際のフォルダ構成が食い違っていると `bun run build` コマンドを実行した時にministaによるstatic site generationの処理が空振りする。エラーメッセージが出力されるわけではない。期待したような成果物が `dist` フォルダに出力されないだけだ。あれえ？と首をかしげるだろう。 
 
 `my-minista-project` プロジェクトにおいてわたしは `pluginSsg` プラグインの設定を下記のように書きました。
 
@@ -71,13 +72,9 @@ include::../my-minista-project/vite.config.js[]
     pluginSsg(),
 ----
 
-と書いても同じことです。`my-minista-project` では設定を明示的に書いたのは、ドキュメントをいちいち参照するよりもコードを読み返す方が楽だからです。
-
-さて、plusginSsgの設定を上記のように決定したので、それに呼応してフォルダ構成がどうあるべきかが決まり、JSXファイルとCSSファイルと画像ファイルをどこに配置するかが決まります。
-
-`pluginSsg` のオプションのデフォルト値がminista開発者の意見を反映していることは当然でしょう。
-
-わたしは `my-minista-project` のフォルダ構成を下記のようにしました。
+と書いても同じことです。`my-minista-project` で設定をコードに明示したのは、ブラウザでドキュメントを参照するよりもエディタでコードを読み返す方が楽だからです。
+ 
+**ministaプロジェクトのフォルダ構成をどうすべきか？ministaの開発者のオススメを `pluginSsg` プラグインのデフォルト値から読み取ることができます。** minista開発者の考えを推し量りつつ わたしは `my-minista-project` のフォルダ構成を下記のようにしました。
 
 [source,shell]
 ----
@@ -106,13 +103,13 @@ my-minista-project
 └── vite.config.js
 ----
 
-なぜこのようなフォルダ構成にしたのか？理由を説明します。
+なぜこのような構成にしたのか？以下に補足します。
 
-==== `src` ディレクトリ
+==== `src` フォルダ
 
-ソースとしてのJSXファイルとCSSファイル画像ファイルをすべて `my-minista-project/src` ディレクトリの下に格納することにします。あとで `bun run build` コマンドを実行した時に成果物が `my-minista-project/dist` ディレクトリに出力されるはず。入力元としての`src` と出力先 `dist` というふうに二つを対照的に配置するのが見やすくて良い。
+ソースとしてのJSXファイルとCSSファイル画像ファイルをすべて `my-minista-project/src` フォルダの下に格納することにします。あとで `bun run build` コマンドを実行した時に成果物が `my-minista-project/dist` フォルダに出力されるはず。入力元としての`src` と出力先 `dist` というふうに二つを対照的に配置するのが見やすくて良い。
 
-==== `src/layouts`
+==== `src/layouts` フォルダ
 
 サイトのすべてのページが共通のレイアウトに従うように作るという設計方針にしたがい、レイアウトを規定するJSXファイル `my-minista-project/src/layouts/index.tsx` を作りました`pluginSsg` プラグインの `layout ` オプションが `layout: "/src/layouts/index.{tsx,jsx}",` と設定されていることと整合が取れていなければなりません。
 
@@ -130,38 +127,70 @@ HTML要素 `<head>` を実装するJSXファイルを下記のように書きま
 include::../my-minista-project/src/layouts/header.tsx[]
 ----
 
-`header.jsx` ファイルを `/src/layouts/` ディレクトリの中に配置しました。その一方でレイアウトを実装するJSXが 
+`header.jsx` ファイルを `/src/layouts/` フォルダの中に配置しました。その一方でレイアウトを実装するJSXが 
 
 `import { MyHeader } from "./header"`
 
-とやってインポートしています。`header.jsx` が `my-minista-project/src/layouts/` ではない別の場所にあっても本来は構わない。`import` 文の `from "fffff"` を適切に書けば解決できる。しかしレイアウトを構成する複数のJSXを１箇所に集めた方が見通しが良い。そこで `header.jsx` を `src/layouts/` ディレクトリに配置した 。`nav` や `footer` についても同じ考えを適用した。
+とやってインポートしています。`header.jsx` が `my-minista-project/src/layouts/` ではない別の場所にあっても本来は構わない。`import` 文の `from "fffff"` を適切に書けば解決できる。しかしレイアウトを構成する複数のJSXを１箇所に集めた方が見通しが良い。そこで `header.jsx` を `src/layouts/` フォルダに配置した 。`nav` や `footer` についても同じ考えを適用した。
 
-==== `src/pages/`
+==== `layout` オプション
 
-ページを実装するJSXファイルを `my-minista-project/src/pages/` ディレクトリの中に格納しました。Webサイトが起動した時に `my-minista-project/src/pages/index.tsx` ファイルがURL `http://localhost:xxxx/` に対応します。
+`vite.config.js` ファイルの `pluginSsg` プラグインの設定にこう書いた。
 
-`my-minista-project/src/pages/about/index.tsx` ファイルがURL `http://localhost:xxxx/about/` に対応します。このように `pages` ディレクトリの下のファイルの相対パスがURLのサブパスと一対一に対応します。
+[source]
+----
+  plugins: [
+    pluginSsg({
+      layout: "/src/layouts/index.{tsx,jsx}",
+----
 
-==== `srcBases`
+`layout` とは何なのか？ link:https://minista.qranoko.jp/docs/plugins/ssg#layout[ドキュメント] にこう書いてある。
 
-`pluginSsg` プラグインの設定をこう書いた。
+[quote]
+____
+layout
+すべてのページテンプレートをラップするコンポーネントの場所を指定します。対象ファイルはViteの機能でglob importされ最初に見つかったファイルが使用されます。
+____
+
+具体的に `my-minista-project/src/layout/index.tsx` をどのように書いたかというと、下記の通り。
 
 [source,typescript]
 ----
-srcBases: ["/src/pages"],
+include::../my-minista-project/src/layouts/index.tsx[]
+----
+
+わたしはここに出現する `LayoutProps` とか `Head` とかをまだわかっていません。いくつかのサンプルコードからコピペして動かしてみたら動いちゃっただけ。これから時間をかけてministaの理解を深めていきたいと思っています。
+
+==== `srcBases` オプション
+
+`pluginSsg` プラグインの設定にこう書いた。
+
+[source]
+----
+  plugins: [
+    pluginSsg({
+      ...
+      srcBases: ["/src/pages"],
 ----
 
 srcBasesについてドキュメントの link:https://minista.qranoko.jp/docs/plugins/ssg#srcbases[srcBases] にこう書いてある。
 
 [quote]
 ____
+srcBase
 ページテンプレートをURLに変換する際に省くパス。前方一致で削除されます。
 ____
 
 この設定があるので、ファイルパス `my-minista-project/src/pages/about/index.tsx` の中の `/src/pages` の部分が省かれて `http://locahost:xxxx/about/` というURLに対応づけられる、というルールが適用されます。
 
+==== `src/pages/` フォルダ
 
-==== `src/assets/`
+ページを実装するJSXファイルを `my-minista-project/src/pages/` フォルダの中に格納しました。Webサイトが起動した時に `my-minista-project/src/pages/index.tsx` ファイルがURL `http://localhost:xxxx/` に対応します。
+
+`my-minista-project/src/pages/about/index.tsx` ファイルがURL `http://localhost:xxxx/about/` に対応します。このように `pages` フォルダの下のファイルの相対パスがURLのサブパスと一対一に対応します。
+
+
+==== `src/assets/` フォルダ
 
 `vite.config.ts` ファイルの中に `pluginBundle` の設定が書いてあります。
 
@@ -198,5 +227,126 @@ ____
 include::../my-minista-project/src/pages/index.tsx[lines=1..2]
 ----
 
-これに整合するように、`my-minista-project/src/assets/css` ディレクトリを作ってその中に `index.css` ファイルを格納しました。との中に格納しました。同じように `my-minista-project/src/assets/images` ディレクトリを作って画像ファイルを格納しました。
+これに整合するように、`my-minista-project/src/assets/css` フォルダを作ってその中に `index.css` ファイルを格納しました。同じように `my-minista-project/src/assets/images` フォルダを作って画像ファイルを格納しました。こんなふうに:
+
+[source,shell]
+----
+$ cd $ROOT/my-minista-project
+$ tree src/assets
+src/assets
+├── css
+│   └── index.css
+└── images
+    ├── 20210515111349_p.jpg
+    ├── 4467417.jpeg
+    └── seagull.jpg
+----
+
+==== `my-minista-project` のソース
+
+GitHubにレポジトリを作ってソースを公開しました。
+
+* link:{REPOS_URL}/tree/master/my-minista-project[]
+
+個々のJSXやCSSのソースについてはGitHubレポジトリを参照してください。素朴なコードなので説明を省略します。
+
+==== buildするとこうなる
+
+[source,shell]
+----
+$ cd $ROOT/my-minista-project
+$ bun run build
+
+$ minista build
+vite v8.2.2 building ssr environment for production...
+✓ 11 modules transformed.
+computing gzip size...
+node_modules/.minista/ssr/__minista-ssg.mjs  9.62 kB │ gzip: 5.22 kB
+
+✓ built in 151ms
+vite v8.2.2 building client environment for production...
+✓ 19 modules transformed.
+computing gzip size...
+dist/index.html                    1.71 kB │ gzip: 0.82 kB
+dist/about/index.html              6.15 kB │ gzip: 4.20 kB
+dist/assets/seagull-DMex-28w.jpg  30.04 kB
+dist/assets/bundle-PBukV8x2.css    0.65 kB │ gzip: 0.29 kB
+
+✓ built in 121ms
+----
+
+`dist` フォルダに静的サイトを構成するファイル一式が生成されました。
+
+[source,shell]
+----
+$ cd $ROOT/my-minimal-project
+$ tree -I 'node_modules' .
+.
+├── bun.lock
+├── dist
+│   ├── about
+│   │   └── index.html
+│   ├── assets
+│   │   ├── bundle-PBukV8x2.css
+│   │   └── seagull-DMex-28w.jpg
+│   └── index.html
+├── package.json
+├── src
+│   ├── assets
+│   │   ├── css
+│   │   │   └── index.css
+│   │   └── images
+│   │       ├── 20210515111349_p.jpg
+│   │       ├── 4467417.jpeg
+│   │       └── seagull.jpg
+│   ├── layouts
+│   │   ├── footer.tsx
+│   │   ├── header.tsx
+│   │   ├── index.tsx
+│   │   └── nav.tsx
+│   └── pages
+│       ├── about
+│       │   └── index.tsx
+│       └── index.tsx
+├── tsconfig.json
+└── vite.config.js
+----
+
+`src` フォルダと `dist` フォルダを見比べると、ministaが `bun run build` の時にどんな処理をするのかを推察することができます。
+
+|===
+| `src` フォルダのファイル | `dist` フォルダ |補足
+
+| `src/pages/index.tsx` ->
+| `dist/index.html`
+| `http://localhost:4173/` に対応する
+
+| `src/pages/about/index.tsx` ->
+| `dist/about/index.html`
+| `http://localhost:4173/about/` に対応する
+
+| `src/layouts/*.tsx` ->
+| なし
+| コンポーネントは結合されて *.html ファイルになる
+
+| `src/assets/css/index.css` ->
+| `dist/assets/bundle-PBukV8x2.css`
+| ページのJSXが参照しているCSSファイル（複数可）の内容をマージして１つのCSSファイルにする
+
+| `src/assets/images/seagull.jpg` ->
+| `dist/assets/images/seagull-DMex-28w.jpg`
+| そのままコピー?
+00
+| `src/assets/images/20210515111349_p.jpg` ->
+| なし
+| HTMLが参照していない画像は無視される。 `dist` に出力されない
+
+|===
+
+`dist` フォルダの中に生成された静的Webサイトを閲覧するには今まで通り `build run preview` コマンドを実行すればいい。サーバーが立ち上がったらブラウザで `http://localhost:4173` を開け。こんな画面が表示される。
+
+image:{PAGES_URL}/images/003_my-minista-project-about.png[]
+
+わたしもministaに入門することはできたかなと思う。
+
 

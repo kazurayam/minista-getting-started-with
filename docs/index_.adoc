@@ -1,8 +1,11 @@
-:REPOS_URL: https://github.com/kazurayam/minista-getting-started-with/blob/master
+:REPOS_URL: https://github.com/kazurayam/minista-getting-started-with/
+:BRANCH_URL: {REPOS_URL}/blob/master
 :PAGES_URL: https://kazurayam.github.io/minista-getting-started-with
 :projectVersion: 0.0.0
 
-= スタティックサイトジェネレーター minista を試してみた
+= スタティックサイトジェネレーター minista 事始め
+
+GitHubレポジトリ: {REPOS_URL}
 
 include::./01_abstract.adoc[]
 

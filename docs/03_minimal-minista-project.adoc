@@ -1,6 +1,6 @@
-== minimal-minista-project
+== minimal-minista-project プロジェクト
 
-まず手元のPCに適当なディレクトリを作った。そのディレクトリのパスをシェル変数 `ROOT` で参照できるようにした。
+まず手元のPCに適当なフォルダを作った。そのフォルダのパスをシェル変数 `ROOT` で参照できるようにした。
 
 [source,shell]
 ----
@@ -124,7 +124,7 @@ image:{PAGES_URL}/images/001_minimal-minista-project.png[]
 
 ==== コマンド2 `bun run build`
 
-コマンドラインで `bun run dev` とやるとViteによるビルドが実行される。 ビルドによって `dist` ディレクトリが作られ、その中にWebサイトを構成するHTMLやCSSや画像ファイルが出力される。`dist` ディレクトリの中に作られたHTML＋CSS＋画像一式をApacheサーバのhtdocsディレクトリの下にFTPでアップロードすれば、高速で応答するWebサイトができるだろう。
+コマンドラインで `bun run dev` とやるとViteによるビルドが実行される。 ビルドによって `dist` フォルダが作られ、その中にWebサイトを構成するHTMLやCSSや画像ファイルが出力される。`dist` フォルダの中に作られたHTML＋CSS＋画像一式をApacheサーバのhtdocsフォルダの下にFTPでアップロードすれば、高速で応答するWebサイトができるだろう。
 
 
 [source,shell]
@@ -146,7 +146,7 @@ dist/index.html  0.17 kB │ gzip: 0.15 kB
 ✓ built in 41ms
 ----
 
-`minimal-minista-project` の `dist` ディレクトリの中身を見てみよう。
+`minimal-minista-project` の `dist` フォルダの中身を見てみよう。
 
 [source,shell]
 ----
@@ -162,7 +162,7 @@ minista が `src/index.tsx` から `dist/index.html` を生成した。これを
 
 ==== コマンド３ `bun run preview`
 
-コマンドラインで `bun run dev` とやるとViteの開発サーバが立ち上がる。すると `dist` ディレクトリの中に生成された静的HTML＋CSSのサイトが閲覧できる。
+コマンドラインで `bun run dev` とやるとViteの開発サーバが立ち上がる。すると `dist` フォルダの中に生成された静的HTML＋CSSのサイトが閲覧できる。
 
 [source, shell]
 ----
@@ -237,7 +237,7 @@ include::../minimal-minista-project/tsconfig.json[]
 include::../minimal-minista-project/vite.config.ts[]
 ----
 
-ここでministaが提供する `pluginSsg` プラグインを有効化すると宣言している。この宣言は重要だ。これが無いとあなたが `bun run build` コマンドを実行してもviteはministaによる **S**tatic **s**ite **g**enerationの処理を実行しないので `dist` 　ディレクトリの中に何も出力されないだろう。
+ここでministaが提供する `pluginSsg` プラグインを有効化すると宣言している。この宣言は重要だ。これが無いとあなたが `bun run build` コマンドを実行してもviteはministaによる **S**tatic **s**ite **g**enerationの処理を実行しないので `dist` 　フォルダの中に何も出力されないだろう。
 
 ここで `pluginSsg` プラグインのドキュメントをぜひ一読してほしい。
 

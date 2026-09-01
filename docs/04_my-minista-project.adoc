@@ -10,7 +10,13 @@ ministaの書き方を習うために少し中身のあるプロジェクトを�
 6. CSSでページのスタイルを定義する。`<head>` と `<nav>` と `<footer>` の背景色を塗り分けて見やすくしよう。
 7. コンテンツの一部として写真も表示しよう
 
-`$ROOT` の下に `my-minista-project` を作ろう。プロジェクトフォルダの名前はユニークにしなければならないが、その他の手順は `minimal-minista-project` と作るのと同じ。
+最終的には `my-minista-project` プロジェクトは下記のような姿のWebページを応答します。
+
+image:{PAGES_URL}/images/002_my-minista-project.png[]
+
+
+
+では `$ROOT` の下に `my-minista-project` を作ろう。プロジェクトフォルダの名前はユニークにしなければならないが、その他の手順は `minimal-minista-project` と作るのと同じ。
 
 [source,shell]
 ----
@@ -19,6 +25,8 @@ $ bun create minista@latest my-minista-project -- --template minista.ts
 $ cd my-minista-project
 $ bun install
 ----
+
+
 
 === 1. `src/index.jsx` を削除する
 
@@ -143,16 +151,52 @@ include::../my-minista-project/src/layouts/header.tsx[]
 srcBases: ["/src/pages"],
 ----
 
-ドキュメントの link:https://minista.qranoko.jp/docs/plugins/ssg#srcbases[srcBases] にこう書いてある。
+srcBasesについてドキュメントの link:https://minista.qranoko.jp/docs/plugins/ssg#srcbases[srcBases] にこう書いてある。
 
-[quote,text]
+[quote]
 ____
 ページテンプレートをURLに変換する際に省くパス。前方一致で削除されます。
 ____
 
-この設定があるので、ファイルパス `my-minista-project/src/pages/about/index.tsx` の中の `/src/pages` が省かれて `locahost:pppp/about/` というURLに対応づけられる、というルールが適用されます。
+この設定があるので、ファイルパス `my-minista-project/src/pages/about/index.tsx` の中の `/src/pages` の部分が省かれて `http://locahost:xxxx/about/` というURLに対応づけられる、というルールが適用されます。
+
 
 ==== `src/assets/`
 
-CSSファイルと画像ファイルを `my-minista-project/src/assets/` の中に格納しました。
+`vite.config.ts` ファイルの中に `pluginBundle` の設定が書いてあります。
+
+[source]
+----
+    pluginBundle({
+      src: ["/src/layouts/index.{tsx,jsx}", "/src/pages/**/*.{tsx,jsx,mdx}"],
+      outName: "bundle",
+      useExportCss: true,
+    }),
+----
+
+を参照のこと。実はこの設定は link:https://minista.qranoko.jp/docs/plugins/bundle#options[pluginBundleのドキュメントのOptions] に示されたデフォルト値と同じです。だから
+
+[source,javascript]
+----
+  plugins: [
+    pluginBundle(),
+----
+
+と書いても同じことです。
+
+`pluginBundle` の `src` オプションが何を意味するかというと
+
+[quote]
+____
+CSS・画像を検出するテンプレートをglob形式で指定します。対象ファイルはViteの機能でglob importされます。
+____
+
+とのこと。例えば `/src/pages/index.tsx` には下記のようなimport文が書いてあります。
+
+[source,typesript]
+----
+include::../my-minista-project/src/pages/index.tsx[lines=1..2]
+----
+
+これに整合するように、`my-minista-project/src/assets/css` ディレクトリを作ってその中に `index.css` ファイルを格納しました。との中に格納しました。同じように `my-minista-project/src/assets/images` ディレクトリを作って画像ファイルを格納しました。
 

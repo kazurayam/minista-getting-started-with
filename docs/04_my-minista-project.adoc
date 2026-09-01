@@ -6,7 +6,7 @@ ministaの使い方を習うために少し中身のあるプロジェクトを�
 2. トップページのURLパスは `/` とする。このほかにサブフォルダを持つURLを作る。たとえば `/about/` のように。
 3. 共通レイアウトを作り、すべてのページがそれに従うこととする
 4. レイアウトをHTML要素 `<head>` と `<nav>` と `<footer>` などで構成する
-5. レイアウト部品を各々独立した `.jsx` ファイルにする。一つのページを複数のコンポーネントの組み合わせで実装する。
+5. レイアウト部品を各々独立した `.jsx` ファイルにする。一つのページを複数のコンポーネントを組み合わせることによって実装する。
 6. CSSでページのスタイルを定義する。`<head>` と `<nav>` と `<footer>` の背景色を塗り分けて見やすくするとか。
 7. コンテンツの一部として写真も表示しよう
 
@@ -46,7 +46,7 @@ include::../my-minista-project/vite.config.js[]
 * link:https://minista.qranoko.jp/docs/plugins/bundle[pluginBundleのドキュメント]
 * link:https://minista.qranoko.jp/docs/plugins/beautify[pluginBeautifyのドキュメント]
 
-`pluginSsg` と `pluginBundle` はどのministaプロジェクトも使うであろう重要なプラグインです。
+`pluginSsg` と `pluginBundle` はどのministaプロジェクトも使うであろう基本的なプラグインです。
 
 **`pluginSsg` プラグインのオプションの設定と `my-minista-project` プロジェクトの実際のフォルダ構成とを整合させること** がとても重要です。
 
@@ -107,11 +107,11 @@ my-minista-project
 
 ==== `src` フォルダ
 
-ソースとしてのJSXファイルとCSSファイル画像ファイルをすべて `my-minista-project/src` フォルダの下に格納することにします。あとで `bun run build` コマンドを実行した時に成果物が `my-minista-project/dist` フォルダに出力されるはず。入力元としての`src` と出力先 `dist` というふうに二つを対照的に配置するのが見やすくて良い。
+ソースとしてのJSXファイルとCSSファイル画像ファイルをすべて `my-minista-project/src` フォルダの下に格納することにします。あとで `bun run build` コマンドを実行した時に成果物が `my-minista-project/dist` フォルダに出力されるはず。入力元としての`src` と出力先 `dist` とふたつを対照的に配置するとわかりやすい。
 
 ==== `src/layouts` フォルダ
 
-サイトのすべてのページが共通のレイアウトに従うように作るという設計方針にしたがい、レイアウトを規定するJSXファイル `my-minista-project/src/layouts/index.tsx` を作りました`pluginSsg` プラグインの `layout ` オプションが `layout: "/src/layouts/index.{tsx,jsx}",` と設定されていることと整合が取れていなければなりません。
+サイトのすべてのページが共通のレイアウトに従うように作るという設計方針にしたがい、レイアウトを規定するJSXファイル `my-minista-project/src/layouts/index.tsx` を作りました `pluginSsg` プラグインの `layout` オプションが `layout: "/src/layouts/index.{tsx,jsx}",` と設定されていることと整合が取れるようにしました。
 
 `my-minista-project/src/layouts/index.tsx` のコードを下記のように書きました。
 
@@ -120,7 +120,7 @@ my-minista-project
 include::../my-minista-project/src/layouts/index.tsx[]
 ----
 
-HTML要素 `<head>` を実装するJSXファイルを下記のように書きました。
+`/src/layouts/header.tsx` を下記のように書きました。これはHTML要素 `<head>` を実装するコンポーネントです。
 
 [source,typescript]
 ----
@@ -131,7 +131,7 @@ include::../my-minista-project/src/layouts/header.tsx[]
 
 `import { MyHeader } from "./header"`
 
-とやってインポートしています。`header.jsx` が `my-minista-project/src/layouts/` ではない別の場所にあっても本来は構わない。`import` 文の `from "fffff"` を適切に書けば解決できる。しかしレイアウトを構成する複数のJSXを１箇所に集めた方が見通しが良い。そこで `header.jsx` を `src/layouts/` フォルダに配置した 。`nav` や `footer` についても同じ考えを適用した。
+とやってインポートしています。`header.jsx` が `my-minista-project/src/layouts/` ではなく別のフォルダにあっても本来は構わない。その場合 `import` 文の `from "fffff"` を適切に書けば解決できる。しかしレイアウトを構成する複数のJSXを１箇所に集めた方が見通しが良いと考えたので、 `header.jsx` を `src/layouts/` フォルダに配置した 。`nav` や `footer` についても同じ考えを適用した。
 
 ==== `layout` オプション
 
@@ -152,14 +152,14 @@ layout
 すべてのページテンプレートをラップするコンポーネントの場所を指定します。対象ファイルはViteの機能でglob importされ最初に見つかったファイルが使用されます。
 ____
 
-具体的に `my-minista-project/src/layout/index.tsx` をどのように書いたかというと、下記の通り。
+`my-minista-project/src/layout/index.tsx` をどのように書いたか、もう一度引用すると下記の通り。
 
 [source,typescript]
 ----
 include::../my-minista-project/src/layouts/index.tsx[]
 ----
 
-わたしはここに出現する `LayoutProps` とか `Head` とかをまだわかっていません。いくつかのサンプルコードからコピペして動かしてみたら動いちゃっただけ。これから時間をかけてministaの理解を深めていきたいと思っています。
+わたしはここに出現する `LayoutProps` とか `Head` とかをまだよくわかっていません。いくつかのサンプルコードからコピペして動かしてみたら動いちゃったまで。
 
 ==== `srcBases` オプション
 
@@ -181,7 +181,7 @@ srcBase
 ページテンプレートをURLに変換する際に省くパス。前方一致で削除されます。
 ____
 
-この設定があるので、ファイルパス `my-minista-project/src/pages/about/index.tsx` の中の `/src/pages` の部分が省かれて `http://locahost:xxxx/about/` というURLに対応づけられる、というルールが適用されます。
+もしこの設定が無ければ ファイルパス `my-minista-project/src/pages/about/index.tsx` は URL `http://locahost:xxxx/src/pages/about/` に対応づけられるでしょう。しかしこのURLは醜い。 `srcBase` オプションを指定することによりファイルパス `my-minista-project/src/pages/about/index.tsx` が `http://locahost:xxxx/about/` というURLに対応づけられます。
 
 ==== `src/pages/` フォルダ
 
@@ -327,7 +327,7 @@ $ tree -I 'node_modules' .
 
 | `src/layouts/*.tsx` ->
 | なし
-| コンポーネントは結合されて *.html ファイルになる
+| コンポーネントは結合されて *.html ファイルの一部になる
 
 | `src/assets/css/index.css` ->
 | `dist/assets/bundle-PBukV8x2.css`
@@ -335,11 +335,11 @@ $ tree -I 'node_modules' .
 
 | `src/assets/images/seagull.jpg` ->
 | `dist/assets/images/seagull-DMex-28w.jpg`
-| そのままコピー?
-00
+| そのままコピーした?何か最適化したか?
+
 | `src/assets/images/20210515111349_p.jpg` ->
 | なし
-| HTMLが参照していない画像は無視される。 `dist` に出力されない
+| srcに存在する画像でHTMLが参照していない画像は無視される。 `dist` に出力されない
 
 |===
 
@@ -347,6 +347,6 @@ $ tree -I 'node_modules' .
 
 image:{PAGES_URL}/images/003_my-minista-project-about.png[]
 
-わたしもministaに入門することはできたかなと思う。
+わたしもministaに入門することができたと思う。
 
 

@@ -77,7 +77,7 @@ bun install v1.4.0 (34cbb9a40)
 include::../minimal-minista-project/package.json[]
 ----
 
-`"devDependencies"` プロパティにいくつかの外部パッケージが列挙されている。`minista` パッケージが根っこで、ministaが依存してい他のパッケージ群を網羅している。つまりコマンドラインで下記の操作をした結果と同じだろう。
+`"devDependencies"` プロパティにいくつかの外部パッケージが列挙されている。`minista` パッケージが根っこで、ministaが依存しているパッケージ群を網羅している。つまりコマンドラインで下記の操作をした結果と同じだろう。
 
 [source,shell]
 ----
@@ -96,7 +96,7 @@ $ bun add minista@latest
   },
 ----
 
-これら３つのコマンドはministaで開発する上で繰り返し実行するものだ。詳しくみてみよう。
+これら３つのコマンドはministaで作業するなら繰り返し実行するものだ。詳しくみてみよう。
 
 ==== コマンド1 `bun run dev`
 
@@ -124,8 +124,7 @@ image:{PAGES_URL}/images/001_minimal-minista-project.png[]
 
 ==== コマンド2 `bun run build`
 
-コマンドラインで `bun run dev` とやるとViteによるビルドが実行される。 ビルドによって `dist` フォルダが作られ、その中にWebサイトを構成するHTMLやCSSや画像ファイルが出力される。`dist` フォルダの中に作られたHTML＋CSS＋画像一式をApacheサーバのhtdocsフォルダの下にFTPでアップロードすれば、高速で応答するWebサイトができるだろう。
-
+コマンドラインで `bun run dev` とやるとViteによるビルドが実行される。 ビルドによって `dist` フォルダが作られ、その中にWebサイトを構成するHTMLやCSSや画像ファイルが出力される。
 
 [source,shell]
 ----
@@ -157,7 +156,7 @@ dist
 1 directory, 1 file
 ----
 
-minista が `src/index.tsx` から `dist/index.html` を生成した。これを見ればたしかに ** static site generation** が行われたのがわかる。
+minista が `src/index.tsx` を入力として受け取り、それ `dist/index.html` を生成した。たしかに ** static site generation** が行われたのがわかる。
 
 
 ==== コマンド３ `bun run preview`
@@ -174,7 +173,7 @@ $ minista preview
 
 ブラウザで http://localhost:4173/ をひらけば "Hello!" 画面が応答される。それは `bun run dev` コマンドによって閲覧可能になった "Hello!" 画面と見た目は同じだ。
 
-`bun run dev` コマンドによって閲覧可能になった画面は `src/index.tsx` ファイルから生成された画面だ。その一方で `bun run preview` コマンドによって閲覧可能になった画面は `dist/index.html` によるものだ。 `src/index.jsx` と `dist/index.html` と、ふたつのファイルの中身は違うが、ブラウザに表示された画面の見た目は同じだ。
+`bun run dev` コマンドによって閲覧可能になった画面は `src/index.tsx` ファイルから生成された画面だ。その一方で `bun run preview` コマンドによって閲覧可能になった画面は `dist/index.html` によるものだ。 `src/index.jsx` と `dist/index.html` と、ふたつのファイルの中身は全く違うが、ブラウザに表示された画面の見た目は同じだ。
 
 
 === `src/pages/index.tsx` ファイル
@@ -219,16 +218,7 @@ ministaは `src/index.tsx` を入力として `dist/index.html` ファイルを�
 include::../minimal-minista-project/tsconfig.json[]
 ----
 
-この中に
-
-[source,json]
-----
-    "jsx": "react-jsx",
-----
-
-と書かれていることに注目。TypeScriptコンパイラがJSX構文を認識して処理するためにReactが実装したJSX処理系を使えと宣言している。
-
-この宣言があるのでTypeScriptコンパイラは `src/pages/index.tsx` のなかの `<h1>Hello!</h1>` という1行を妥当なJSX構文として受け入れる。もしもこの宣言がないとTypeScriptコンパイラはJSX構文を受け入れず、 `<h1>Hello!</h1>` を構文エラーとしてはじくだろう。
+特に目立つところはない。
 
 === `vite.config.ts` ファイル
 
@@ -237,7 +227,9 @@ include::../minimal-minista-project/tsconfig.json[]
 include::../minimal-minista-project/vite.config.ts[]
 ----
 
-ここでministaが提供する `pluginSsg` プラグインを有効化すると宣言している。この宣言は重要だ。これが無いとあなたが `bun run build` コマンドを実行してもviteはministaによる **S**tatic **s**ite **g**enerationの処理を実行しないので `dist` 　フォルダの中に何も出力されないだろう。
+ここでministaが提供する `pluginSsg` プラグインを有効化してViteに組み込むことを宣言している。
+
+この宣言は重要だ。これが無いとあなたが `bun run build` コマンドを実行してもviteはministaによる **S**tatic **s**ite **g**enerationの処理を実行しない。 `dist` フォルダの中に何も出力されないだろう。
 
 ここで `pluginSsg` プラグインのドキュメントをぜひ一読してほしい。
 

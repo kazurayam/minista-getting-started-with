@@ -1,7 +1,7 @@
 - Table of contents
 {:toc}
 
-# スタティックサイトジェネレーター minista 事始め
+# スタティックサイトジェネレーター minista を試してみた
 
 GitHubレポジトリ: <https://github.com/kazurayam/minista-getting-started-with/>
 
@@ -20,11 +20,11 @@ GitHubレポジトリ: <https://github.com/kazurayam/minista-getting-started-wit
 -   [build したらエラ〜発生: ReferenceError: document is not defined
     \#146](https://github.com/qrac/minista/issues/146#event-30162718761)
 
-このissueにキスパートが応えてくれて大いに学ぶところがあった。
+このissueにキスパートが応えてくれた。おおいに学ぶところがあった。
 
-ministaの公式ドキュメントには詳細情報が盛られている。しかし未経験者が読むべき初歩的な手引きがない。そこでわたしの経験をネタに Getting Started with minista を書くことにした。
+ministaの公式ドキュメントに詳細情報が書かれている。しかし未経験者が迷わず読み通せる初歩的な手引きがないとわたしは思った。そこで自分の経験をネタに Getting Started with minista を書くことにした。
 
-## 作業環境
+## わたしの作業環境
 
 -   マシン: MacBook Air Intel, 2018
 
@@ -117,7 +117,7 @@ ministaの公式ドキュメント [Setup / minista](https://minista.qranoko.jp/
       }
     }
 
-`"devDependencies"` プロパティにいくつかの外部パッケージが列挙されている。`minista` パッケージが根っこで、ministaが依存してい他のパッケージ群を網羅している。つまりコマンドラインで下記の操作をした結果と同じだろう。
+`"devDependencies"` プロパティにいくつかの外部パッケージが列挙されている。`minista` パッケージが根っこで、ministaが依存しているパッケージ群を網羅している。つまりコマンドラインで下記の操作をした結果と同じだろう。
 
     $ cd $ROOT/minimal-minista-project
     $ bun add minista@latest
@@ -130,7 +130,7 @@ ministaの公式ドキュメント [Setup / minista](https://minista.qranoko.jp/
         "preview": "minista preview"
       },
 
-これら３つのコマンドはministaで開発する上で繰り返し実行するものだ。詳しくみてみよう。
+これら３つのコマンドはministaで作業するなら繰り返し実行するものだ。詳しくみてみよう。
 
 #### コマンド1 `bun run dev`
 
@@ -154,7 +154,7 @@ ministaの公式ドキュメント [Setup / minista](https://minista.qranoko.jp/
 
 #### コマンド2 `bun run build`
 
-コマンドラインで `bun run dev` とやるとViteによるビルドが実行される。 ビルドによって `dist` フォルダが作られ、その中にWebサイトを構成するHTMLやCSSや画像ファイルが出力される。`dist` フォルダの中に作られたHTML＋CSS＋画像一式をApacheサーバのhtdocsフォルダの下にFTPでアップロードすれば、高速で応答するWebサイトができるだろう。
+コマンドラインで `bun run dev` とやるとViteによるビルドが実行される。 ビルドによって `dist` フォルダが作られ、その中にWebサイトを構成するHTMLやCSSや画像ファイルが出力される。
 
     $ cd $ROOT/minimal-minista-project
     $ bun run build
@@ -180,7 +180,7 @@ ministaの公式ドキュメント [Setup / minista](https://minista.qranoko.jp/
 
     1 directory, 1 file
 
-minista が `src/index.tsx` から `dist/index.html` を生成した。これを見ればたしかに **static site generation** が行われたのがわかる。
+minista が `src/index.tsx` を入力として受け取り、それ `dist/index.html` を生成した。たしかに **static site generation** が行われたのがわかる。
 
 #### コマンド３ `bun run preview`
 
@@ -193,7 +193,7 @@ minista が `src/index.tsx` から `dist/index.html` を生成した。これを
 
 ブラウザで <http://localhost:4173/> をひらけば "Hello!" 画面が応答される。それは `bun run dev` コマンドによって閲覧可能になった "Hello!" 画面と見た目は同じだ。
 
-`bun run dev` コマンドによって閲覧可能になった画面は `src/index.tsx` ファイルから生成された画面だ。その一方で `bun run preview` コマンドによって閲覧可能になった画面は `dist/index.html` によるものだ。 `src/index.jsx` と `dist/index.html` と、ふたつのファイルの中身は違うが、ブラウザに表示された画面の見た目は同じだ。
+`bun run dev` コマンドによって閲覧可能になった画面は `src/index.tsx` ファイルから生成された画面だ。その一方で `bun run preview` コマンドによって閲覧可能になった画面は `dist/index.html` によるものだ。 `src/index.jsx` と `dist/index.html` と、ふたつのファイルの中身は全く違うが、ブラウザに表示された画面の見た目は同じだ。
 
 ### `src/pages/index.tsx` ファイル
 
@@ -244,13 +244,7 @@ ministaは `src/index.tsx` を入力として `dist/index.html` ファイルを�
       "exclude": ["node_modules", "dist"]
     }
 
-この中に
-
-        "jsx": "react-jsx",
-
-と書かれていることに注目。TypeScriptコンパイラがJSX構文を認識して処理するためにReactが実装したJSX処理系を使えと宣言している。
-
-この宣言があるのでTypeScriptコンパイラは `src/pages/index.tsx` のなかの `<h1>Hello!</h1>` という1行を妥当なJSX構文として受け入れる。もしもこの宣言がないとTypeScriptコンパイラはJSX構文を受け入れず、 `<h1>Hello!</h1>` を構文エラーとしてはじくだろう。
+特に目立つところはない。
 
 ### `vite.config.ts` ファイル
 
@@ -260,7 +254,9 @@ ministaは `src/index.tsx` を入力として `dist/index.html` ファイルを�
       plugins: [pluginSsg()],
     })
 
-ここでministaが提供する `pluginSsg` プラグインを有効化すると宣言している。この宣言は重要だ。これが無いとあなたが `bun run build` コマンドを実行してもviteはministaによる **S**tatic **s**ite **g**enerationの処理を実行しないので `dist` 　フォルダの中に何も出力されないだろう。
+ここでministaが提供する `pluginSsg` プラグインを有効化してViteに組み込むことを宣言している。
+
+この宣言は重要だ。これが無いとあなたが `bun run build` コマンドを実行してもviteはministaによる **S**tatic **s**ite **g**enerationの処理を実行しない。 `dist` フォルダの中に何も出力されないだろう。
 
 ここで `pluginSsg` プラグインのドキュメントをぜひ一読してほしい。
 
@@ -280,7 +276,7 @@ ministaの使い方を習うために少し中身のあるプロジェクトを�
 
 4.  レイアウトをHTML要素 `<head>` と `<nav>` と `<footer>` などで構成する
 
-5.  レイアウト部品を各々独立した `.jsx` ファイルにする。一つのページを複数のコンポーネントの組み合わせで実装する。
+5.  レイアウト部品を各々独立した `.jsx` ファイルにする。一つのページを複数のコンポーネントを組み合わせることによって実装する。
 
 6.  CSSでページのスタイルを定義する。`<head>` と `<nav>` と `<footer>` の背景色を塗り分けて見やすくするとか。
 
@@ -333,7 +329,7 @@ ministaの使い方を習うために少し中身のあるプロジェクトを�
 
 -   [pluginBeautifyのドキュメント](https://minista.qranoko.jp/docs/plugins/beautify)
 
-`pluginSsg` と `pluginBundle` はどのministaプロジェクトも使うであろう重要なプラグインです。
+`pluginSsg` と `pluginBundle` はどのministaプロジェクトも使うであろう基本的なプラグインです。
 
 **`pluginSsg` プラグインのオプションの設定と `my-minista-project` プロジェクトの実際のフォルダ構成とを整合させること** がとても重要です。
 
@@ -385,11 +381,11 @@ ministaの使い方を習うために少し中身のあるプロジェクトを�
 
 #### `src` フォルダ
 
-ソースとしてのJSXファイルとCSSファイル画像ファイルをすべて `my-minista-project/src` フォルダの下に格納することにします。あとで `bun run build` コマンドを実行した時に成果物が `my-minista-project/dist` フォルダに出力されるはず。入力元としての\`src\` と出力先 `dist` というふうに二つを対照的に配置するのが見やすくて良い。
+ソースとしてのJSXファイルとCSSファイル画像ファイルをすべて `my-minista-project/src` フォルダの下に格納することにします。あとで `bun run build` コマンドを実行した時に成果物が `my-minista-project/dist` フォルダに出力されるはず。入力元としての\`src\` と出力先 `dist` とふたつを対照的に配置するとわかりやすい。
 
 #### `src/layouts` フォルダ
 
-サイトのすべてのページが共通のレイアウトに従うように作るという設計方針にしたがい、レイアウトを規定するJSXファイル `my-minista-project/src/layouts/index.tsx` を作りました\`pluginSsg\` プラグインの `` layout ` オプションが `layout: "/src/layouts/index.{tsx,jsx}", `` と設定されていることと整合が取れていなければなりません。
+サイトのすべてのページが共通のレイアウトに従うように作るという設計方針にしたがい、レイアウトを規定するJSXファイル `my-minista-project/src/layouts/index.tsx` を作りました `pluginSsg` プラグインの `layout` オプションが `layout: "/src/layouts/index.{tsx,jsx}",` と設定されていることと整合が取れるようにしました。
 
 `my-minista-project/src/layouts/index.tsx` のコードを下記のように書きました。
 
@@ -417,7 +413,7 @@ ministaの使い方を習うために少し中身のあるプロジェクトを�
       )
     }
 
-HTML要素 `<head>` を実装するJSXファイルを下記のように書きました。
+`/src/layouts/header.tsx` を下記のように書きました。これはHTML要素 `<head>` を実装するコンポーネントです。
 
     export const MyHeader = () => {
         return (
@@ -431,7 +427,7 @@ HTML要素 `<head>` を実装するJSXファイルを下記のように書きま
 
 `import { MyHeader } from "./header"`
 
-とやってインポートしています。`header.jsx` が `my-minista-project/src/layouts/` ではない別の場所にあっても本来は構わない。`import` 文の `from "fffff"` を適切に書けば解決できる。しかしレイアウトを構成する複数のJSXを１箇所に集めた方が見通しが良い。そこで `header.jsx` を `src/layouts/` フォルダに配置した 。`nav` や `footer` についても同じ考えを適用した。
+とやってインポートしています。`header.jsx` が `my-minista-project/src/layouts/` ではなく別のフォルダにあっても本来は構わない。その場合 `import` 文の `from "fffff"` を適切に書けば解決できる。しかしレイアウトを構成する複数のJSXを１箇所に集めた方が見通しが良いと考えたので、 `header.jsx` を `src/layouts/` フォルダに配置した 。`nav` や `footer` についても同じ考えを適用した。
 
 #### `layout` オプション
 
@@ -446,7 +442,7 @@ HTML要素 `<head>` を実装するJSXファイルを下記のように書きま
 > layout
 > すべてのページテンプレートをラップするコンポーネントの場所を指定します。対象ファイルはViteの機能でglob importされ最初に見つかったファイルが使用されます。
 
-具体的に `my-minista-project/src/layout/index.tsx` をどのように書いたかというと、下記の通り。
+`my-minista-project/src/layout/index.tsx` をどのように書いたか、もう一度引用すると下記の通り。
 
     import type { LayoutProps } from "minista/types"
     import { Head } from "minista/head"
@@ -472,7 +468,7 @@ HTML要素 `<head>` を実装するJSXファイルを下記のように書きま
       )
     }
 
-わたしはここに出現する `LayoutProps` とか `Head` とかをまだわかっていません。いくつかのサンプルコードからコピペして動かしてみたら動いちゃっただけ。これから時間をかけてministaの理解を深めていきたいと思っています。
+わたしはここに出現する `LayoutProps` とか `Head` とかをまだよくわかっていません。いくつかのサンプルコードからコピペして動かしてみたら動いちゃったまで。
 
 #### `srcBases` オプション
 
@@ -488,7 +484,7 @@ srcBasesについてドキュメントの [srcBases](https://minista.qranoko.jp/
 > srcBase
 > ページテンプレートをURLに変換する際に省くパス。前方一致で削除されます。
 
-この設定があるので、ファイルパス `my-minista-project/src/pages/about/index.tsx` の中の `/src/pages` の部分が省かれて `http://locahost:xxxx/about/` というURLに対応づけられる、というルールが適用されます。
+もしこの設定が無ければ ファイルパス `my-minista-project/src/pages/about/index.tsx` は URL `http://locahost:xxxx/src/pages/about/` に対応づけられるでしょう。しかしこのURLは醜い。 `srcBase` オプションを指定することによりファイルパス `my-minista-project/src/pages/about/index.tsx` が `http://locahost:xxxx/about/` というURLに対応づけられます。
 
 #### `src/pages/` フォルダ
 
@@ -627,7 +623,7 @@ GitHubにレポジトリを作ってソースを公開しました。
 <tr class="odd">
 <td style="text-align: left;"><p><code>src/layouts/*.tsx</code> →</p></td>
 <td style="text-align: left;"><p>なし</p></td>
-<td style="text-align: left;"><p>コンポーネントは結合されて *.html ファイルになる</p></td>
+<td style="text-align: left;"><p>コンポーネントは結合されて *.html ファイルの一部になる</p></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><p><code>src/assets/css/index.css</code> →</p></td>
@@ -637,13 +633,12 @@ GitHubにレポジトリを作ってソースを公開しました。
 <tr class="odd">
 <td style="text-align: left;"><p><code>src/assets/images/seagull.jpg</code> →</p></td>
 <td style="text-align: left;"><p><code>dist/assets/images/seagull-DMex-28w.jpg</code></p></td>
-<td style="text-align: left;"><p>そのままコピー?
-00</p></td>
+<td style="text-align: left;"><p>そのままコピーした?何か最適化したか?</p></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><p><code>src/assets/images/20210515111349_p.jpg</code> →</p></td>
 <td style="text-align: left;"><p>なし</p></td>
-<td style="text-align: left;"><p>HTMLが参照していない画像は無視される。 <code>dist</code> に出力されない</p></td>
+<td style="text-align: left;"><p>srcに存在する画像でHTMLが参照していない画像は無視される。 <code>dist</code> に出力されない</p></td>
 </tr>
 </tbody>
 </table>
@@ -652,7 +647,7 @@ GitHubにレポジトリを作ってソースを公開しました。
 
 ![003 my minista project about](https://kazurayam.github.io/minista-getting-started-with/images/003_my-minista-project-about.png)
 
-わたしもministaに入門することはできたかなと思う。
+わたしもministaに入門することができたと思う。
 
 ## minista本家の `docs` プロジェクト
 
@@ -660,13 +655,13 @@ ministaのGitHubレポジトリに `docs` フォルダがある。
 
 -   <https://github.com/qrac/minista/tree/main/docs>
 
-このフォルダは minista を使って静的Webサイトを生成するサンプルになっている。どういうWebサイトが生成されるのかというと以下のURLだ。
+このフォルダは minista を使って静的Webサイトを生成する充実したサンプルになっている。どういうWebサイトが生成されるのかというと以下のURLだ。
 
 -   <https://minista.qranoko.jp/docs/>
 
 つまりministaの公式ドキュメントのサイトそれ自体がministaを使って構築されているわけだ。
 
-公式ドキュメントを見ればministaがたくさんの機能（プラグイン）を提供することがわかる。しかしどう使えばいいのか、よくわからない。実際に動くサンプルを見たいなあ…​ そう思ったら [misista/docs](https://github.com/qrac/minista/tree/main/docs) フォルダを掘ってみると良い。宝物がゴロゴロ転がっている予感がします。
+公式ドキュメントを見ればministaがたくさんの機能（プラグイン）を提供することがわかる。実際に動くサンプルを見たいなあ…​ そう思ったら [misista/docs](https://github.com/qrac/minista/tree/main/docs) フォルダを掘ってみると良い。宝物がゴロゴロ転がっている予感がします。
 
 たとえば
 
@@ -680,12 +675,12 @@ ministaのGitHubレポジトリに `docs` フォルダがある。
 
 -   <https://github.com/qrac/minista/blob/main/docs/src/pages/docs/plugins/ssg.mdx>
 
-あれ？ファイル名の拡張子が `.mdx` という見慣れない文字になっている。これをよく見るとMarkdown構文のテキストでした。ministaの公式ドキュメントのテキストのほとんどはMarkdownで書かれていました。
+あれ？ファイル名の拡張子が `.mdx` という見慣れない文字になっている。これをよく見るとMarkdown構文のテキストでした。ministaの公式ドキュメントのほとんどはMarkdown構文で書かれていました。
 
 ## 結び
 
-ministaを使って静的HTMLサイトを作る作業を一通り経験することができた。わたしがいま担当しているHTMLオンリーなWebサイトのメンテナンス性の悪さを解消するのにministaが役立ちそうです。JSXの利点を享受しつつも、無理にSingle Page Applicationに移行する愚を避けて、Apacheサーバのhtdocsフォルダ下に静的HTMLとCSSを配備する現状のシステム構成を継承することができる。
+わたしはministaを使って静的HTMLサイトを作ることに成功した。わたしがいま担当しているHTMLオンリーなWebサイトをJSXで書き直すのにministaがきっと役立つでしょう。JSXの利点を享受しつつも、無理にSingle Page Applicationに移行する愚を避けて、Apacheサーバのhtdocsフォルダ下に静的HTML+CSSを置くだけの現状のシステム構成を継承することができる。
 
-ページのコンテンツをMarkdown構文のテキストで書けるようにする [`pluginMdx`](https://minista.qranoko.jp/docs/plugins/mdx) を導入すれば、某学術団体のインターネット・ホームページのメンテナンスは今より数段やさしくなるだろう。ITに詳しくない人にこの仕事を引き継ぐことも不可能でなくなるだろう。
+[`pluginMdx`](https://minista.qranoko.jp/docs/plugins/mdx) を導入すれば、What\`s NewsページのコンテンツをMarkdown構文のテキストで書けるようになる。某学術団体インターネット・ホームページのメンテナンスは数段やさしくなるに違いない。近い将来、ITに詳しくない人に役を引き継ぐことも不可能でなくなるだろう。
 
 これからもっとministaを深掘りします。

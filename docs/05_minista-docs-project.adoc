@@ -4,13 +4,13 @@ ministaのGitHubレポジトリに `docs` フォルダがある。
 
 * https://github.com/qrac/minista/tree/main/docs
 
-このフォルダは minista を使って静的Webサイトを生成するサンプルになっている。どういうWebサイトが生成されるのかというと以下のURLだ。
+このフォルダは minista を使って静的Webサイトを生成する充実したサンプルになっている。どういうWebサイトが生成されるのかというと以下のURLだ。
 
 * https://minista.qranoko.jp/docs/
 
 つまりministaの公式ドキュメントのサイトそれ自体がministaを使って構築されているわけだ。
 
-公式ドキュメントを見ればministaがたくさんの機能（プラグイン）を提供することがわかる。しかしどう使えばいいのか、よくわからない。実際に動くサンプルを見たいなあ... そう思ったら link:https://github.com/qrac/minista/tree/main/docs[misista/docs] フォルダを掘ってみると良い。宝物がゴロゴロ転がっている予感がします。
+公式ドキュメントを見ればministaがたくさんの機能（プラグイン）を提供することがわかる。実際に動くサンプルを見たいなあ... そう思ったら link:https://github.com/qrac/minista/tree/main/docs[misista/docs] フォルダを掘ってみると良い。宝物がゴロゴロ転がっている予感がします。
 
 たとえば
 
@@ -24,6 +24,6 @@ image:{PAGES_URL}/images/004_docs_plugins_ssg.png[]
 
 * https://github.com/qrac/minista/blob/main/docs/src/pages/docs/plugins/ssg.mdx
 
-あれ？ファイル名の拡張子が `.mdx` という見慣れない文字になっている。これをよく見るとMarkdown構文のテキストでした。ministaの公式ドキュメントのテキストのほとんどはMarkdownで書かれていました。
+あれ？ファイル名の拡張子が `.mdx` という見慣れない文字になっている。これをよく見るとMarkdown構文のテキストでした。ministaの公式ドキュメントのほとんどはMarkdown構文で書かれていました。
 
 

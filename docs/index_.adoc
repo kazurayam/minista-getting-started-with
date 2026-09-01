@@ -3,7 +3,7 @@
 :PAGES_URL: https://kazurayam.github.io/minista-getting-started-with
 :projectVersion: 0.0.0
 
-= スタティックサイトジェネレーター minista 事始め
+= スタティックサイトジェネレーター minista を試してみた
 
 GitHubレポジトリ: {REPOS_URL}
 

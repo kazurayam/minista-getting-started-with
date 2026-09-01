@@ -1,4 +1,4 @@
-== 作業環境
+== わたしの作業環境
 
 * マシン: MacBook Air Intel, 2018
 * OS: macOS Sonoma 17.8.9

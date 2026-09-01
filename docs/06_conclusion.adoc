@@ -1,7 +1,7 @@
 == 結び
 
-ministaを使って静的HTMLサイトを作る作業を一通り経験することができた。わたしがいま担当しているHTMLオンリーなWebサイトのメンテナンス性の悪さを解消するのにministaが役立ちそうです。JSXの利点を享受しつつも、無理にSingle Page Applicationに移行する愚を避けて、Apacheサーバのhtdocsフォルダ下に静的HTMLとCSSを配備する現状のシステム構成を継承することができる。
+わたしはministaを使って静的HTMLサイトを作ることに成功した。わたしがいま担当しているHTMLオンリーなWebサイトをJSXで書き直すのにministaがきっと役立つでしょう。JSXの利点を享受しつつも、無理にSingle Page Applicationに移行する愚を避けて、Apacheサーバのhtdocsフォルダ下に静的HTML+CSSを置くだけの現状のシステム構成を継承することができる。
 
-ページのコンテンツをMarkdown構文のテキストで書けるようにする link:https://minista.qranoko.jp/docs/plugins/mdx[`pluginMdx`] を導入すれば、某学術団体のインターネット・ホームページのメンテナンスは今より数段やさしくなるだろう。ITに詳しくない人にこの仕事を引き継ぐことも不可能でなくなるだろう。
+link:https://minista.qranoko.jp/docs/plugins/mdx[`pluginMdx`] を導入すれば、What`s NewsページのコンテンツをMarkdown構文のテキストで書けるようになる。某学術団体インターネット・ホームページのメンテナンスは数段やさしくなるに違いない。近い将来、ITに詳しくない人に役を引き継ぐことも不可能でなくなるだろう。
 
 これからもっとministaを深掘りします。

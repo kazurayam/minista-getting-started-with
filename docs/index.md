@@ -22,7 +22,7 @@ GitHubレポジトリ: <https://github.com/kazurayam/minista-getting-started-wit
 -   [build したらエラ〜発生: ReferenceError: document is not defined
     \#146](https://github.com/qrac/minista/issues/146#event-30162718761)
 
-このissueにキスパートが応えてくれた。おおいに学ぶところがあった。
+このissueにエキスパートが応えてくれた。おおいに学ぶところがあった。
 
 ministaの公式ドキュメントに詳細情報が書かれている。しかし未経験者が迷わず読み通せる初歩的な手引きがないとわたしは思った。そこで自分の経験をネタに Getting Started with minista を書くことにした。
 

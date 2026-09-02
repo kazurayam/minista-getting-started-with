@@ -159,7 +159,7 @@ dist
 minista が `src/index.tsx` を入力として受け取り、それ `dist/index.html` を生成した。たしかに ** static site generation** が行われたのがわかる。
 
 
-==== コマンド３ `bun run preview`
+==== コマンド3 `bun run preview`
 
 コマンドラインで `bun run dev` とやるとViteの開発サーバが立ち上がる。すると `dist` フォルダの中に生成された静的HTML＋CSSのサイトが閲覧できる。
 

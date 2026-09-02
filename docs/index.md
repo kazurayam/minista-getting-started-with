@@ -196,7 +196,7 @@ ministaの公式ドキュメント [Setup / minista](https://minista.qranoko.jp/
 
 minista が `src/index.tsx` を入力として受け取り、それ `dist/index.html` を生成した。たしかに **static site generation** が行われたのがわかる。
 
-#### コマンド３ `bun run preview`
+#### コマンド3 `bun run preview`
 
 コマンドラインで `bun run dev` とやるとViteの開発サーバが立ち上がる。すると `dist` フォルダの中に生成された静的HTML＋CSSのサイトが閲覧できる。
 
@@ -313,7 +313,7 @@ ministaの使い方を習うために少し中身のあるプロジェクトを�
 
 `bun create minista@latest` コマンドに `--template minista.ts` と指定した。このテンプレートの定義に従って `src/index.tsx` ファイルが生成された。しかし `my-minista-project` でこのtsxファイルは不要だ。だから削除する。
 
-### 2. `vite.config.js` を書き換える
+### 2. `vite.config.js` を書きかえる & フォルダ構造を決定する
 
 次に `vite.config.js` を次のように書きかえる。
 
@@ -544,7 +544,7 @@ srcBasesについてドキュメントの [srcBases](https://minista.qranoko.jp/
         ├── 4467417.jpeg
         └── seagull.jpg
 
-#### `my-minista-project` のソース
+### 3. `my-minista-project` のソース
 
 GitHubにレポジトリを作ってソースを公開しました。
 
@@ -552,7 +552,7 @@ GitHubにレポジトリを作ってソースを公開しました。
 
 個々のJSXやCSSのソースについてはGitHubレポジトリを参照してください。素朴なコードなので説明を省略します。
 
-#### buildするとこうなる
+### 4. ビルドするとこうなる
 
     $ cd $ROOT/my-minista-project
     $ bun run build
